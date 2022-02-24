@@ -1,0 +1,38 @@
+# IDE
+*.vs
+*.suo
+*.user
+.vscode/*
+!.vscode/settings.json
+.vscode
+
+/_NCrunch_Match
+/Match.v3.ncrunchsolution
+*.ncrunchproject
+*.orig
+
+# Backend compilation
+[Bb]in/
+[Oo]bj/
+/server/Match.Web/wwwroot/*
+!/server/Match.Web/wwwroot/images
+/server/Match.Web/Properties/PublishProfiles/FolderProfile.pubxml
+/server/Match.Web/tenant.json
+
+# Front compilation
+**/node_modules/*
+**/.yarn/*
+!**/.yarn/releases
+!client/.yarn/cache
+yarn-error.log
+.pnp.*
+/client/**/dist/*
+
+# Publish results
+/build/*
+
+# husky file
+/.husky/_/husky.sh
+
+# circular depedency file
+/client/circular-dependency-visualization.html
