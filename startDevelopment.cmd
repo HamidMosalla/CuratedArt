@@ -9,7 +9,7 @@ REM Run front watcher
 start cmd /k yarn watch
 
 REM Run back
-cd server
+cd ..\server
 start "CuratedArt Back" dotnet run --environment %Environment%
 
 exit
