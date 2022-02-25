@@ -6,18 +6,18 @@
 !.vscode/settings.json
 .vscode
 
-/_NCrunch_Match
-/Match.v3.ncrunchsolution
+/_NCrunch_CuratedArt
+/CuratedArt.v3.ncrunchsolution
 *.ncrunchproject
 *.orig
 
 # Backend compilation
 [Bb]in/
 [Oo]bj/
-/server/Match.Web/wwwroot/*
-!/server/Match.Web/wwwroot/images
-/server/Match.Web/Properties/PublishProfiles/FolderProfile.pubxml
-/server/Match.Web/tenant.json
+/server/CuratedArt/wwwroot/*
+!/server/CuratedArt/wwwroot/images
+/server/CuratedArt/Properties/PublishProfiles/FolderProfile.pubxml
+/server/CuratedArt/tenant.json
 
 # Front compilation
 **/node_modules/*

@@ -1,0 +1,4 @@
+Find out what is the best way to structure the packed files
+Find out what is the best way to store css and styles and best way to pack them (right now they are in the app.js)
+Add a component using the react UI framework
+Add unit test framework and add some test
