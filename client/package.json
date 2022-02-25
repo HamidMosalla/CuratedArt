@@ -22,7 +22,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-	"watch": "webpack --mode=development --watch"
+    "watch": "webpack --mode=development --watch"
   },
   "eslintConfig": {
     "extends": [
@@ -43,6 +43,10 @@
     ]
   },
   "devDependencies": {
+    "css-loader": "^6.6.0",
+    "html-webpack-plugin": "^4.5.2",
+    "svg-inline-loader": "^0.8.2",
+    "ts-loader": "^9.2.6",
     "webpack": "^5.69.1",
     "webpack-cli": "^4.9.2"
   }
