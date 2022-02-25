@@ -1,5 +1,4 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     mode: 'none',
@@ -31,10 +30,5 @@ module.exports = {
         filename: '[name].js',
         path: path.resolve(__dirname, '../server/CuratedArt/wwwroot/dist'),
         publicPath: "/",
-    },
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: path.join(__dirname, 'src', 'index.html')
-        })
-    ]
+    }
 }
