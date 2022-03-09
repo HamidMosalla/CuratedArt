@@ -50,6 +50,7 @@
     "css-loader": "^6.6.0",
     "svg-inline-loader": "^0.8.2",
     "ts-loader": "^9.2.6",
+    "url-loader": "^4.1.1",
     "webpack": "^5.69.1",
     "webpack-cli": "^4.9.2"
   }
