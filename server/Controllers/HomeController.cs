@@ -4,6 +4,8 @@ using System.Diagnostics;
 
 namespace CuratedArt.Controllers
 {
+    using Microsoft.Extensions.Logging;
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -19,6 +21,11 @@ namespace CuratedArt.Controllers
         }
 
         public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public IActionResult ArtSubmission()
         {
             return View();
         }
