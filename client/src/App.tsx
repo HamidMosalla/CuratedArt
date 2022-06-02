@@ -9,7 +9,7 @@ function App() {
       <header className="App-header">
         <MediaCard />
         <hr />
-        <ArtSubmission />
+        <ArtSubmission intitialTitle="Mandy" />
       </header>
     </div>
   );

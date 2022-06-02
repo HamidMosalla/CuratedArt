@@ -1,62 +1,107 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import { useFormik } from "formik";
+import { FormikProps, withFormik, FormikErrors, Form } from "formik";
 import * as yup from "yup";
 import { TextField, Button } from "@mui/material";
+import { Info } from "@mui/icons-material";
+
+interface ArtSubmissionFormValues {
+  title: string;
+  artistName: string;
+  releaseDate: string;
+}
+
+interface ArtSubmissionFormProps {
+  message?: string;
+  intitialTitle: string;
+}
+
+interface ArtSubmissionFormOtherProps {
+  message?: string;
+}
 
 const validationSchema = yup.object({
-  email: yup
+  title: yup.string().required("Title is required"),
+  artistName: yup
     .string()
-    .email("Enter a valid email")
-    .required("Email is required"),
-  password: yup
-    .string()
-    .min(8, "Password should be of minimum 8 characters length")
-    .required("Password is required"),
+    .min(3, "ArtistName should be of minimum 3 characters length")
+    .required("ArtistName is required"),
 });
 
-const ArtSubmission = () => {
-  const formik = useFormik({
-    initialValues: {
-      email: "foobar@example.com",
-      password: "foobar",
-    },
-    validationSchema: validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    },
-  });
-
+const ArtSubmission = (
+  props: ArtSubmissionFormOtherProps & FormikProps<ArtSubmissionFormValues>
+) => {
+  const { touched, errors, isSubmitting, message, handleChange } = props;
   return (
-    <div>
-      <form onSubmit={formik.handleSubmit}>
-        <TextField
-          fullWidth
-          id="email"
-          name="email"
-          label="Email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          error={formik.touched.email && Boolean(formik.errors.email)}
-          helperText={formik.touched.email && formik.errors.email}
-        />
-        <TextField
-          fullWidth
-          id="password"
-          name="password"
-          label="Password"
-          type="password"
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          error={formik.touched.password && Boolean(formik.errors.password)}
-          helperText={formik.touched.password && formik.errors.password}
-        />
-        <Button color="primary" variant="contained" fullWidth type="submit">
-          Submit
-        </Button>
-      </form>
-    </div>
+    <Form>
+      <Info>{message}</Info>
+      <TextField
+        fullWidth
+        id="title"
+        name="title"
+        label="title"
+        value={props.values.title}
+        onChange={handleChange}
+        error={touched.title && Boolean(errors.title)}
+        helperText={touched.title && errors.title}
+      />
+      <TextField
+        fullWidth
+        id="artistName"
+        name="artistName"
+        label="artistName"
+        value={props.values.artistName}
+        onChange={handleChange}
+        error={touched.artistName && Boolean(errors.artistName)}
+        helperText={touched.artistName && errors.artistName}
+      />
+      <TextField
+        id="releaseDate"
+        label="releaseDate"
+        type="date"
+        value={props.values.releaseDate}
+        sx={{ width: 220 }}
+        InputLabelProps={{
+          shrink: true,
+        }}
+        onChange={handleChange}
+      />
+      <Button
+        color="primary"
+        variant="contained"
+        fullWidth
+        type="submit"
+        disabled={isSubmitting}
+      >
+        Submit
+      </Button>
+    </Form>
   );
 };
 
-export default ArtSubmission;
+const ArtSubmittionFormWrapper = withFormik<
+  ArtSubmissionFormProps,
+  ArtSubmissionFormValues
+>({
+  // Transform outer props into form values
+  mapPropsToValues: (props) => {
+    return {
+      title: props.intitialTitle || "",
+      artistName: "",
+      releaseDate: "2023-06-01",
+    };
+  },
+  validationSchema: validationSchema,
+  // Add a custom validation function (this can be async too!)
+  validate: (values: ArtSubmissionFormValues) => {
+    let errors: FormikErrors<ArtSubmissionFormValues> = {};
+    if (values.title === "NoteBook") {
+      errors.title = "No ChickFlic here, sorry";
+    }
+    return errors;
+  },
+  handleSubmit: (values) => {
+    alert(JSON.stringify(values, null, 2));
+  },
+})(ArtSubmission);
+
+export default ArtSubmittionFormWrapper;

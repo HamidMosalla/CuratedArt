@@ -14,10 +14,10 @@
 # Backend compilation
 [Bb]in/
 [Oo]bj/
-/server/CuratedArt/wwwroot/*
-!/server/CuratedArt/wwwroot/images
-/server/CuratedArt/Properties/PublishProfiles/FolderProfile.pubxml
-/server/CuratedArt/tenant.json
+/server/wwwroot/*
+!/server/wwwroot/images
+/server/Properties/PublishProfiles/FolderProfile.pubxml
+/server/tenant.json
 
 # Front compilation
 **/node_modules/*
