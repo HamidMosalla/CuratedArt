@@ -33,7 +33,7 @@ const ArtSubmission = (
   const { touched, errors, isSubmitting, message, handleChange } = props;
   return (
     <Form>
-      <Info>{message}</Info>
+      {message && <Info>{message}</Info>}
       <TextField
         fullWidth
         id="title"

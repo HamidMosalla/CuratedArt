@@ -1,8 +1,17 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using System.Text.RegularExpressions
+
+@section Head {
+   @* @foreach (var style in WebpackModules.GetStyles(Context.Request))
+    {
+        <link rel="stylesheet" href="@style" />
+    }*@
 }
 
-<div class="text-center">
-    <div id="root"></div>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@section Scripts {
+    <script type="text/javascript" src="/dist/app.js"></script>
+    <script type="text/javascript" src="/dist/node_modules_web-vitals_dist_web-vitals_js.js"></script>
+   @* @foreach (var script in WebpackModules.GetScripts(Context.Request))
+    {
+        <script type="text/javascript" src="@script"></script>
+    }*@
+}
