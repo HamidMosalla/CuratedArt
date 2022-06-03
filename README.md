@@ -1,2 +1,2 @@
 # CuratedArt
-App created using Asp.Net Core 6 and ReactJs and Typescript to post and created art related lists
+App created using Asp.Net Core 6 and ReactJs and Typescript and other front end technologies focusing on front end best practices.
