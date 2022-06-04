@@ -14,7 +14,12 @@
     "@types/node": "^16.11.25",
     "@types/react": "^17.0.39",
     "@types/react-dom": "^17.0.11",
+    "circular-dependency-plugin": "^5.2.2",
+    "clean-webpack-plugin": "^4.0.0",
+    "fork-ts-checker-webpack-plugin": "^7.2.11",
     "formik": "^2.2.9",
+    "mini-css-extract-plugin": "^2.6.0",
+    "node-notifier": "^10.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^6.3.0",
@@ -22,6 +27,8 @@
     "typescript": "^4.5.5",
     "watch": "^1.0.2",
     "web-vitals": "^2.1.4",
+    "webpack-assets-manifest": "^5.1.0",
+    "webpack-bundle-analyzer": "^4.5.0",
     "yup": "^0.32.11"
   },
   "scripts": {
@@ -51,10 +58,13 @@
   },
   "devDependencies": {
     "css-loader": "^6.6.0",
+    "strip-ansi": "^6.0.0",
     "svg-inline-loader": "^0.8.2",
     "ts-loader": "^9.2.6",
     "url-loader": "^4.1.1",
     "webpack": "^5.69.1",
-    "webpack-cli": "^4.9.2"
+    "webpack-cli": "^4.9.2",
+    "@swc/core": "^1.2.196",
+    "swc-loader": "^0.2.1"
   }
 }

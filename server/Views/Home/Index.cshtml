@@ -1,17 +1,16 @@
-﻿@using System.Text.RegularExpressions
+﻿@using CuratedArt.FrontEndArchitecture
+@inject WebpackModules WebpackModules
 
 @section Head {
-   @* @foreach (var style in WebpackModules.GetStyles(Context.Request))
+    @foreach (var style in WebpackModules.GetStyles(Context.Request))
     {
         <link rel="stylesheet" href="@style" />
-    }*@
+    }
 }
 
 @section Scripts {
-    <script type="text/javascript" src="/dist/app.js"></script>
-    <script type="text/javascript" src="/dist/node_modules_web-vitals_dist_web-vitals_js.js"></script>
-   @* @foreach (var script in WebpackModules.GetScripts(Context.Request))
+     @foreach (var script in WebpackModules.GetScripts(Context.Request))
     {
         <script type="text/javascript" src="@script"></script>
-    }*@
+    }
 }
