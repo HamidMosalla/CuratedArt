@@ -41,7 +41,6 @@ const ArtSubmission = (
   const { touched, errors, isSubmitting, message, handleChange } = props;
   return (
     <React.Fragment>
-      <CssBaseline />
       <Container maxWidth="sm">
         <Box>
           <MediaCard />

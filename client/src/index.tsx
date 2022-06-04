@@ -1,12 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./Components/App";
+import App from "./components/App";
 import reportWebVitals from "./reportWebVitals";
+import { CssBaseline } from "@mui/material";
+import { HelmetProvider } from "react-helmet-async";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <HelmetProvider>
+      <CssBaseline />
+      <App />
+    </HelmetProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
