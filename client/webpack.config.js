@@ -155,7 +155,7 @@ module.exports = (_, argv) => {
                     },
                     vendor_2: {
                         name: "vendor-2",
-                        test: /[\\/]node_modules[\\/](@talentsoft|react|react-dom|mobx|mobx-react-lite)[\\/]/,
+                        test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
                         chunks: "all",
                         enforce: true,
                         priority: 2,
