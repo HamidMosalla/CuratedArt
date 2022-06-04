@@ -1,7 +1,8 @@
 Diff between the package.json to see what is missing
 Find out what is the best way to store css and styles and best way to pack them (right now they are in the app.js)
 Add unit test framework and add some test
-
+compare ts config and their differences
+use some useful scripts in package.json for building, watching etc tec
 
 
 
@@ -13,4 +14,8 @@ Add unit test framework and add some test
 
 Candidate Libraries:
 D3 (or D3.js) is a JavaScript library for visualizing data
-date-fns and date-fns-tz date-fns provides the most comprehensive, yet simple and consistent toolset for manipulating JavaScript dates
+react-window : React components for efficiently rendering large lists and tabular data
+tslib : This is a runtime library for TypeScript that contains all of the TypeScript helper functions.
+useDebounce:  When used in conjunction with useEffect, ensure that expensive operations like API calls are not executed too frequently.
+husky : create git hooks to automate things after commit, like running test etc
+release-please: create a release log automarially using the  Conventional Commit messages

@@ -9,6 +9,7 @@ const Header = () => {
     <>
       <Helmet htmlAttributes={{ lang: "en-US" || undefined }}>
         <title>{"Curated Art"}</title>
+        <meta property="og:title" content="Curated Art" />
         <link rel="shortcut icon" href={favicon} type="image/x-icon" />
       </Helmet>
       <nav>
