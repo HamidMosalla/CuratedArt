@@ -1,8 +1,16 @@
 import React from "react";
 import { FormikProps, withFormik, FormikErrors, Form } from "formik";
 import * as yup from "yup";
-import { TextField, Button } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Box,
+  Grid,
+  CssBaseline,
+  Container,
+} from "@mui/material";
 import { Info } from "@mui/icons-material";
+import MediaCard from "./MediaCard";
 
 interface ArtSubmissionFormValues {
   title: string;
@@ -32,49 +40,60 @@ const ArtSubmission = (
 ) => {
   const { touched, errors, isSubmitting, message, handleChange } = props;
   return (
-    <Form>
-      {message && <Info>{message}</Info>}
-      <TextField
-        fullWidth
-        id="title"
-        name="title"
-        label="title"
-        value={props.values.title}
-        onChange={handleChange}
-        error={touched.title && Boolean(errors.title)}
-        helperText={touched.title && errors.title}
-      />
-      <TextField
-        fullWidth
-        id="artistName"
-        name="artistName"
-        label="artistName"
-        value={props.values.artistName}
-        onChange={handleChange}
-        error={touched.artistName && Boolean(errors.artistName)}
-        helperText={touched.artistName && errors.artistName}
-      />
-      <TextField
-        id="releaseDate"
-        label="releaseDate"
-        type="date"
-        value={props.values.releaseDate}
-        sx={{ width: 220 }}
-        InputLabelProps={{
-          shrink: true,
-        }}
-        onChange={handleChange}
-      />
-      <Button
-        color="primary"
-        variant="contained"
-        fullWidth
-        type="submit"
-        disabled={isSubmitting}
-      >
-        Submit
-      </Button>
-    </Form>
+    <React.Fragment>
+      <CssBaseline />
+      <Container maxWidth="sm">
+        <Box>
+          <MediaCard />
+        </Box>
+        <br />
+        <Box>
+          <Form>
+            {message && <Info>{message}</Info>}
+            <TextField
+              fullWidth
+              id="title"
+              name="title"
+              label="title"
+              value={props.values.title}
+              onChange={handleChange}
+              error={touched.title && Boolean(errors.title)}
+              helperText={touched.title && errors.title}
+            />
+            <TextField
+              fullWidth
+              id="artistName"
+              name="artistName"
+              label="artistName"
+              value={props.values.artistName}
+              onChange={handleChange}
+              error={touched.artistName && Boolean(errors.artistName)}
+              helperText={touched.artistName && errors.artistName}
+            />
+            <TextField
+              id="releaseDate"
+              label="releaseDate"
+              type="date"
+              value={props.values.releaseDate}
+              sx={{ width: 220 }}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              onChange={handleChange}
+            />
+            <Button
+              color="primary"
+              variant="contained"
+              fullWidth
+              type="submit"
+              disabled={isSubmitting}
+            >
+              Submit
+            </Button>
+          </Form>
+        </Box>
+      </Container>
+    </React.Fragment>
   );
 };
 

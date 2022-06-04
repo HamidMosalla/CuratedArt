@@ -4,6 +4,7 @@ import HomePage from "./HomePage";
 import AboutPage from "./About";
 import Header from "./Header";
 import PageNotFound from "./PageNotFound";
+import ArtSubmission from "./ArtSubmission";
 
 function App() {
   return (
@@ -13,6 +14,10 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route
+            path="/nana"
+            element={<ArtSubmission intitialTitle="Mandy" />}
+          />
           <Route element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
@@ -21,22 +26,3 @@ function App() {
 }
 
 export default App;
-
-// import React from "react";
-// import "./App.css";
-// import ArtSubmission from "./Components/ArtSubmission";
-// import MediaCard from "./Components/MediaCard";
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <MediaCard />
-//         <hr />
-//         <ArtSubmission intitialTitle="Mandy" />
-//       </header>
-//     </div>
-//   );
-// }
-
-// export default App;
