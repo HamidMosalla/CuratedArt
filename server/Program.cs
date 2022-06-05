@@ -17,11 +17,11 @@ builder.Services.AddControllersWithViews();
 
 if (builder.Environment.IsDevelopment())
 {
-    builder.Services.AddScoped<WebpackModules>();
+    builder.Services.AddScoped<FrontEndAssetRenderer>();
 }
 else
 {
-    builder.Services.AddSingleton<WebpackModules>();
+    builder.Services.AddSingleton<FrontEndAssetRenderer>();
 }
 
 var app = builder.Build();

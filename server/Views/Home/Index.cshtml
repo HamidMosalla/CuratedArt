@@ -1,15 +1,15 @@
 ﻿@using CuratedArt.FrontEndArchitecture
-@inject WebpackModules WebpackModules
+@inject FrontEndAssetRenderer _frontEndAssetRenderer
 
 @section Head {
-    @foreach (var style in WebpackModules.GetStyles(Context.Request))
+    @foreach (var style in _frontEndAssetRenderer.GetStyles(Context.Request))
     {
         <link rel="stylesheet" href="@style" />
     }
 }
 
 @section Scripts {
-     @foreach (var script in WebpackModules.GetScripts(Context.Request))
+     @foreach (var script in _frontEndAssetRenderer.GetScripts(Context.Request))
     {
         <script type="text/javascript" src="@script"></script>
     }

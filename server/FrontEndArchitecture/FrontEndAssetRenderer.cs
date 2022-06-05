@@ -7,12 +7,12 @@
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
 
-    public class WebpackModules
+    public class FrontEndAssetRenderer
     {
         private readonly List<string> _jsFiles;
         private readonly List<string> _cssFiles;
 
-        public WebpackModules(IWebHostEnvironment webHostEnvironment)
+        public FrontEndAssetRenderer(IWebHostEnvironment webHostEnvironment)
         {
             var manifestSource = File.ReadAllText(Path.Combine(webHostEnvironment.ContentRootPath, "wwwroot/assets-manifest.json"));
             var jsonObject = JsonNode.Parse(manifestSource);

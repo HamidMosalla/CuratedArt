@@ -1,7 +1,7 @@
-Find out what is the best way to store css and styles and best way to pack them (right now they are in the app.js)
+Remove the unnecessary libraries installed for css, account for the fact that we use styled-components now
 Add unit test framework and add some test
 use some useful scripts in package.json for building, watching etc tec
-
+Create useful hooks https://githooks.com/ as a sample
 
 
 
