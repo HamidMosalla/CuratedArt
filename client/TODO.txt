@@ -1,7 +1,5 @@
-Diff between the package.json to see what is missing
 Find out what is the best way to store css and styles and best way to pack them (right now they are in the app.js)
 Add unit test framework and add some test
-compare ts config and their differences
 use some useful scripts in package.json for building, watching etc tec
 
 
