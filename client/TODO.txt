@@ -1,6 +1,14 @@
 Remove the unnecessary libraries installed for css, account for the fact that we use styled-components now
 Add unit test framework and add some test
 Create useful hooks for husky https://githooks.com/ as a sample
+Create automatic typescript interfaces from the view models added inside the back
+Create backbone for web calls
+
+
+Create Unit tests
+Create integration tests
+Create end-to-end tests using selenium
+Create postman API tests
 
 
 
