@@ -8,11 +8,15 @@ const orders = [
 
 module.exports = {
     extends: [
-     'react-app',
+    'plugin:@typescript-eslint/recommended',
+     'eslint:recommended',
      'airbnb',
-     'plugin:@typescript-eslint/recommended',
-     'prettier/@typescript-eslint',
+     'airbnb-typescript',
+     'prettier',
     ],
+    parserOptions: {
+        project: ['./tsconfig.json'],
+      },
     globals: {
         Atomics: 'readonly',
         SharedArrayBuffer: 'readonly',

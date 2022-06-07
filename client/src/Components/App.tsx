@@ -7,22 +7,19 @@ import PageNotFound from "./PageNotFound";
 import ArtSubmission from "./ArtSubmission";
 
 function App() {
-  return (
-    <div className="container-fluid">
-      <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route
-            path="/nana"
-            element={<ArtSubmission intitialTitle="Mandy" />}
-          />
-          <Route element={<PageNotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
-  );
+    return (
+        <div className="container-fluid">
+            <BrowserRouter>
+                <Header />
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/about" element={<AboutPage />} />
+                    <Route path="/nana" element={<ArtSubmission intitialTitle="Mandy" />} />
+                    <Route element={<PageNotFound />} />
+                </Routes>
+            </BrowserRouter>
+        </div>
+    );
 }
 
 export default App;
