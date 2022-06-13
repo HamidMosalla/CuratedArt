@@ -46,6 +46,7 @@ module.exports = {
                 },
             },
         ],
+        "react/destructuring-assignment": ["enabled", 'never']
     },
     settings: {
         jest: {
