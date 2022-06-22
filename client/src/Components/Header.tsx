@@ -24,7 +24,7 @@ const Header = () => {
                     About
                 </NavLink>
                 {" | "}
-                <NavLink to="/nana" style={activeStyle}>
+                <NavLink to="/submissions" style={activeStyle}>
                     Submissions
                 </NavLink>
             </nav>

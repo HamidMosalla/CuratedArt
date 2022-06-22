@@ -14,7 +14,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/about" element={<AboutPage />} />
-                    <Route path="/nana" element={<ArtSubmission intitialTitle="Mandy" />} />
+                    <Route path="/submissions" element={<ArtSubmission intitialTitle="Mandy" />} />
                     <Route element={<PageNotFound />} />
                 </Routes>
             </BrowserRouter>

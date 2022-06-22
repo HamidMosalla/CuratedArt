@@ -15,6 +15,11 @@ namespace CuratedArt.Controllers
             _logger = logger;
         }
 
+        [HttpGet("")]
+        [HttpGet("about/{*slug}")]
+        [HttpGet("submissions/{*slug}")]
+        [HttpGet("admin/{*slug}")]
+        [HttpGet("errors/{*slug}")]
         public IActionResult Index()
         {
             return View();
