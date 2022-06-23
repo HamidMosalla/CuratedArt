@@ -12,7 +12,7 @@ import { useMemo, useState } from "react";
 import { Layout } from "../Layout";
 
 function App() {
-    const [mode, setMode] = useState<typeof LIGHT_MODE_THEME | typeof DARK_MODE_THEME>(DARK_MODE_THEME);
+    const [mode, setMode] = useState<typeof LIGHT_MODE_THEME | typeof DARK_MODE_THEME>(LIGHT_MODE_THEME);
 
     const themeMode = useMemo(
         () => ({
@@ -29,18 +29,17 @@ function App() {
         <ThemeModeContext.Provider value={themeMode}>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
-                <div className="container-fluid">
-                    <BrowserRouter>
-                        <Layout>
-                            <Routes>
-                                <Route path="/" element={<HomePage />} />
-                                <Route path="/about" element={<AboutPage />} />
-                                <Route path="/submissions" element={<ArtSubmission intitialTitle="Mandy" />} />
-                                <Route element={<PageNotFound />} />
-                            </Routes>
-                        </Layout>
-                    </BrowserRouter>
-                </div>
+
+                <BrowserRouter>
+                    <Layout>
+                        <Routes>
+                            <Route path="/" element={<HomePage />} />
+                            <Route path="/about" element={<AboutPage />} />
+                            <Route path="/submissions" element={<ArtSubmission intitialTitle="Mandy" />} />
+                            <Route element={<PageNotFound />} />
+                        </Routes>
+                    </Layout>
+                </BrowserRouter>
             </ThemeProvider>
         </ThemeModeContext.Provider>
     );
