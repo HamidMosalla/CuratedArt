@@ -1,10 +1,11 @@
-import { Button, Menu, MenuItem } from "@mui/material";
+import { Button, Menu, MenuItem, useTheme } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import React from "react";
+import { LIGHT_MODE_THEME } from "../utils/constants";
 
 export const Navigation = () => {
     const activeStyle = { color: "#F15B2A" };
-
+    const theme = useTheme();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -22,6 +23,8 @@ export const Navigation = () => {
                 aria-controls={open ? "demo-positioned-menu" : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? "true" : undefined}
+                color={theme.palette.mode === LIGHT_MODE_THEME ? "warning" : "primary"}
+                size="large"
                 onClick={handleClick}
             >
                 Dashboard

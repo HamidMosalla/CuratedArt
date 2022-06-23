@@ -30,16 +30,16 @@ function App() {
             <ThemeProvider theme={theme}>
                 <CssBaseline />
                 <div className="container-fluid">
-                    <Layout>
-                        <BrowserRouter>
+                    <BrowserRouter>
+                        <Layout>
                             <Routes>
                                 <Route path="/" element={<HomePage />} />
                                 <Route path="/about" element={<AboutPage />} />
                                 <Route path="/submissions" element={<ArtSubmission intitialTitle="Mandy" />} />
                                 <Route element={<PageNotFound />} />
                             </Routes>
-                        </BrowserRouter>
-                    </Layout>
+                        </Layout>
+                    </BrowserRouter>
                 </div>
             </ThemeProvider>
         </ThemeModeContext.Provider>
