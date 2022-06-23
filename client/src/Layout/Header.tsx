@@ -1,11 +1,11 @@
-import React from "react";
 import { Helmet } from "react-helmet-async";
-import { NavLink } from "react-router-dom";
 import favicon from "../assets/curated-art-icon.png";
 import { APP_TITLE, APP_DESCRIPTION } from "../utils/constants";
+import { AppBar, Box, Toolbar } from "@mui/material";
+import { ThemeSwitcher } from "../components/Actions/ThemeSwitcher";
+import { Navigation } from "./Navigation";
 
-const Header = () => {
-    const activeStyle = { color: "#F15B2A" };
+export const Header = () => {
     return (
         <>
             <Helmet htmlAttributes={{ lang: "en-US" || undefined }}>
@@ -15,21 +15,17 @@ const Header = () => {
                 <meta name="viewport" content="initial-scale=1, width=device-width" />
                 <link rel="shortcut icon" href={favicon} type="image/x-icon" />
             </Helmet>
-            <nav>
-                <NavLink to="/" style={activeStyle}>
-                    Home
-                </NavLink>
-                {" | "}
-                <NavLink to="/about" style={activeStyle}>
-                    About
-                </NavLink>
-                {" | "}
-                <NavLink to="/submissions" style={activeStyle}>
-                    Submissions
-                </NavLink>
-            </nav>
+
+            <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+                <Navigation />
+
+                <Toolbar disableGutters variant="dense">
+                    <Box sx={{ flexGrow: 1 }} />
+                    <Box sx={{ display: { xs: "none", md: "flex", alignItems: "center" } }}>
+                        <ThemeSwitcher />
+                    </Box>
+                </Toolbar>
+            </AppBar>
         </>
     );
 };
-
-export default Header;

@@ -5,6 +5,7 @@ const forkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const webPackAssetsManifest = require("webpack-assets-manifest");
 const node_notifier = require("node-notifier");
 const stripAnsi = require("strip-ansi");
+const webpack = require('webpack')
 
 function notify(type, message) {
     node_notifier.notify({
@@ -105,7 +106,6 @@ module.exports = (_, argv) => {
             path: __dirname + "/../server/wwwroot/",
             publicPath: "/",
         },
-
         resolve: {
             extensions: [".ts", ".tsx", ".js", ".css"],
         },
@@ -192,6 +192,9 @@ module.exports = (_, argv) => {
                     return entry.key === "entrypoints";
                 },
             }),
+            new webpack.ProvidePlugin({
+                "React": "react",
+             }),
         ],
     };
 

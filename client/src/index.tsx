@@ -2,13 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/App";
 import reportWebVitals from "./reportWebVitals";
-import { CssBaseline } from "@mui/material";
 import { HelmetProvider } from "react-helmet-async";
 
 ReactDOM.render(
     <React.StrictMode>
         <HelmetProvider>
-            <CssBaseline />
             <App />
         </HelmetProvider>
     </React.StrictMode>,

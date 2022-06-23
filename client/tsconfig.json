@@ -4,7 +4,7 @@
       "esModuleInterop": true,
       "allowSyntheticDefaultImports": true,
       "skipLibCheck": true,
-      "jsx": "react",
+      "jsx": "react-jsx",
       "strict": true,
       "experimentalDecorators": true,
       "noUnusedLocals": true,
