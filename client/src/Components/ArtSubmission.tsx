@@ -3,16 +3,6 @@ import { TextField, Button, Box, Container } from "@mui/material";
 import { FormikProps, withFormik, FormikErrors, Form } from "formik";
 import * as yup from "yup";
 import MediaCard from "./MediaCard";
-import styled from "styled-components";
-
-const TextFieldStyled = styled(TextField)`
-    background: transparent;
-    border-radius: 3px;
-    border: 10px solid blueviolet;
-    color: blueviolet;
-    margin: 0 1em;
-    padding: 0.25em 1em;
-`;
 
 interface ArtSubmissionFormValues {
     title: string;
@@ -49,7 +39,7 @@ function ArtSubmission(props: ArtSubmissionFormOtherProps & FormikProps<ArtSubmi
                 <Form>
                     {message && <Info>{message}</Info>}
 
-                    <TextFieldStyled
+                    <TextField
                         fullWidth
                         id="title"
                         name="title"
