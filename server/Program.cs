@@ -2,6 +2,9 @@ using CuratedArt.Data;
 using CuratedArt.FrontEndArchitecture;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using CuratedArt.Controllers;
+using CuratedArt.Data.Models;
+using CuratedArt.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +24,12 @@ else
 {
     builder.Services.AddSingleton<FrontEndAssetRenderer>();
 }
+
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddTransient<IArtWorkService, ArtWorkService>();
 
 var app = builder.Build();
 
@@ -45,6 +54,12 @@ using (var scope = app.Services.CreateScope())
     await db.Database.MigrateAsync();
 }
 
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+};
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -57,5 +72,8 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+
+// TODO: might use minimal APIs later
+//app.MapArtWorkEndpoints();
 
 app.Run();
