@@ -12,4 +12,5 @@ public interface IArtWorkService
     Task DeleteArtWork(Guid id);
     Task<ArtWorkDto> CreateArtWork(ArtWorkDto artWorkDto);
     Task PatchArtWork(JsonPatchDocument<ArtWorkDto> patchDocument, ArtWorkDto artWork);
+    Task<ArtWorkDto[]> CreateArtWorks(ArtWorkDto[] artWorkDtos);
 }

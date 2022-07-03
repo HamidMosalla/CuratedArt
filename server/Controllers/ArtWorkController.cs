@@ -46,6 +46,14 @@ namespace CuratedArt.Controllers
             return CreatedAtRoute("GetArtWork", new { id = artWorkDto.Id }, createdArtWorkDto);
         }
 
+        [HttpPost("bulk")]
+        public async Task<ActionResult> BulkCreate([FromBody] ArtWorkDto[] artWorkDtos)
+        {
+            var createdArtWorkDtos = await _artWorkService.CreateArtWorks(artWorkDtos);
+
+            return Ok(createdArtWorkDtos);
+        }
+
         [HttpPatch("{id}")]
         public async Task<ActionResult> Patch(Guid id, [FromBody] JsonPatchDocument<ArtWorkDto> patchDocument)
         {

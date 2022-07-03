@@ -68,6 +68,23 @@ public class ArtWorkService : IArtWorkService
         return artWorkDto;
     }
 
+    public async Task<ArtWorkDto[]> CreateArtWorks(ArtWorkDto[] artWorkDtos)
+    {
+        var artWorks = artWorkDtos.Select(a => new ArtWork
+        {
+            Id = a.Id == Guid.Empty ? Guid.NewGuid() : a.Id,
+            Type = a.Type,
+            Name = a.Name,
+            DateReleased = a.DateReleased,
+            Desc = a.Desc,
+        });
+
+        await _curatedArtDbContext.AddRangeAsync(artWorks);
+        await _curatedArtDbContext.SaveChangesAsync();
+
+        return artWorkDtos;
+    }
+
     public async Task PatchArtWork(JsonPatchDocument<ArtWorkDto> patchDocument, ArtWorkDto artWorkDto)
     {
         patchDocument.ApplyTo(artWorkDto);

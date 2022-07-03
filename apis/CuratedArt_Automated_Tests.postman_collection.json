@@ -168,6 +168,55 @@
 					"response": []
 				},
 				{
+					"name": "Bulk Create Artwork Is Successful",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(pm.info.requestName, function () {\r",
+									"    var data = pm.response.json();\r",
+									"\r",
+									"    pm.response.to.not.be.error;\r",
+									"    pm.response.to.be.ok;\r",
+									"    pm.expect(data.length).to.be.eq(9);\r",
+									"    pm.expect(data[0].id).to.be.eq('3b4cbc3c-15d0-4c0c-a22b-08da5d3bf262');\r",
+									"    pm.expect(data[0].name).to.be.eq('artWork2');\r",
+									"    pm.expect(data).to.be.not.empty;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n     {\r\n        \"id\": \"3b4cbc3c-15d0-4c0c-a22b-08da5d3bf262\",\r\n        \"name\": \"artWork2\",\r\n        \"desc\": \"desc 2\",\r\n        \"dateReleased\": \"9999-12-31T23:59:59.9999999+00:00\",\r\n        \"type\": 2\r\n    },\r\n    {\r\n        \"id\": \"4a02fff0-1134-43e6-a22c-08da5d3bf262\",\r\n        \"name\": \"artWork3\",\r\n        \"desc\": \"desc 3\",\r\n        \"dateReleased\": \"9999-12-31T23:59:59.9999999+00:00\",\r\n        \"type\": 2\r\n    },\r\n    {\r\n        \"id\": \"8309761b-310a-40f4-a22d-08da5d3bf262\",\r\n        \"name\": \"artWork4\",\r\n        \"desc\": \"desc 4\",\r\n        \"dateReleased\": \"9999-12-31T23:59:59.9999999+00:00\",\r\n        \"type\": 2\r\n    },\r\n    {\r\n        \"id\": \"711a0a62-43d8-4895-a22e-08da5d3bf262\",\r\n        \"name\": \"artWork5\",\r\n        \"desc\": \"desc 5\",\r\n        \"dateReleased\": \"9999-12-31T23:59:59.9999999+00:00\",\r\n        \"type\": 2\r\n    },\r\n    {\r\n        \"id\": \"0d75ad50-60cc-4fcc-a22f-08da5d3bf262\",\r\n        \"name\": \"artWork6\",\r\n        \"desc\": \"desc 6\",\r\n        \"dateReleased\": \"9999-12-31T23:59:59.9999999+00:00\",\r\n        \"type\": 2\r\n    },\r\n    {\r\n        \"id\": \"e35e049a-7715-4752-a230-08da5d3bf262\",\r\n        \"name\": \"artWork7\",\r\n        \"desc\": \"desc 7\",\r\n        \"dateReleased\": \"9999-12-31T23:59:59.9999999+00:00\",\r\n        \"type\": 2\r\n    },\r\n    {\r\n        \"id\": \"36be67d9-a5a2-49aa-a231-08da5d3bf262\",\r\n        \"name\": \"artWork8\",\r\n        \"desc\": \"desc 8\",\r\n        \"dateReleased\": \"9999-12-31T23:59:59.9999999+00:00\",\r\n        \"type\": 2\r\n    },\r\n    {\r\n        \"id\": \"0a318c51-fbe1-4357-a232-08da5d3bf262\",\r\n        \"name\": \"artWork9\",\r\n        \"desc\": \"desc 9\",\r\n        \"dateReleased\": \"9999-12-31T23:59:59.9999999+00:00\",\r\n        \"type\": 2\r\n    },\r\n    {\r\n        \"id\": \"bc91adda-666c-40f0-a22a-08da5d3bf666\",\r\n        \"name\": \"artWork10\",\r\n        \"desc\": \"desc 10\",\r\n        \"dateReleased\": \"2022-12-31T23:59:59.9999999+00:00\",\r\n        \"type\": 2\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{AppRoot}}/api/v1/artworks/bulk",
+							"host": [
+								"{{AppRoot}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"artworks",
+								"bulk"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Patch Artwork Successfully Patch",
 					"event": [
 						{
