@@ -4,6 +4,7 @@ using CuratedArt.FrontEndArchitecture;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using CuratedArt.Services;
+using Microsoft.AspNetCore.Mvc.Versioning;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,24 @@ else
 {
     builder.Services.AddSingleton<FrontEndAssetRenderer>();
 }
+
+builder.Services.AddApiVersioning(o =>
+{
+    o.AssumeDefaultVersionWhenUnspecified = true;
+    o.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+    o.ReportApiVersions = true;
+    o.ApiVersionReader = ApiVersionReader.Combine(
+        new QueryStringApiVersionReader("api-version"),
+        new HeaderApiVersionReader("X-Version"),
+        new MediaTypeApiVersionReader("ver"));
+});
+
+builder.Services.AddVersionedApiExplorer(
+    options =>
+    {
+        options.GroupNameFormat = "'v'VVV";
+        options.SubstituteApiVersionInUrl = true;
+    });
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -54,7 +73,11 @@ using (var scope = app.Services.CreateScope())
     await db.Database.MigrateAsync();
 
     var seeder = new SeedArtWorks(db);
-    await seeder.Seed();
+
+    if (!db.ArtWorks.Any())
+    {
+        await seeder.Seed();
+    }
 }
 
 if (app.Environment.IsDevelopment())

@@ -1,0 +1,93 @@
+{
+	"info": {
+		"_postman_id": "32b36395-1b94-44da-a233-9c1bb7188b71",
+		"name": "CuratedArt_Automated_Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2983960"
+	},
+	"item": [
+		{
+			"name": "Setup",
+			"item": []
+		},
+		{
+			"name": "ArtWorks",
+			"item": [
+				{
+					"name": "Get Artworks Receives Multiple ArtWork",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(pm.info.requestName, function () {\r",
+									"    var data = pm.response.json();\r",
+									"\r",
+									"    pm.response.to.not.be.error;\r",
+									"    pm.response.to.be.ok;\r",
+									"    pm.expect(data.length).to.be.gte(10);\r",
+									"    pm.expect(data).to.be.not.empty;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{AppRoot}}/api/v1/artworks",
+							"host": [
+								"{{AppRoot}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"artworks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Artwork Receives One ArtWork",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(pm.info.requestName, function () {\r",
+									"    var data = pm.response.json();\r",
+									"\r",
+									"    pm.response.to.not.be.error;\r",
+									"    pm.response.to.be.ok;\r",
+									"    pm.expect(data).to.be.not.empty;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{AppRoot}}/api/v1/artworks/3d05ca72-9b5d-4e38-80c6-2daa7e31fa4a",
+							"host": [
+								"{{AppRoot}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"artworks",
+								"3d05ca72-9b5d-4e38-80c6-2daa7e31fa4a"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

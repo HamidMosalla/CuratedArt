@@ -7,8 +7,9 @@ namespace CuratedArt.Controllers
 {
     using CuratedArt.Dtos;
 
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/artworks")]
     [ApiController]
+    [ApiVersion("1.0")]
     public class ArtWorkController : ControllerBase
     {
         private IArtWorkService _artWorkService;
@@ -20,33 +21,31 @@ namespace CuratedArt.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<ActionResult<List<ArtWorkDto>>> Get()
         {
-            var artWorks = _artWorkService.GetArtWorks();
+            var artWorks = await _artWorkService.GetArtWorks();
 
             return Ok(artWorks);
         }
 
-        // GET api/<ArtWorkController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<ArtWorkDto>> Get(Guid id)
         {
-            return "value";
+            var artWork = await _artWorkService.GetArtWork(id);
+
+            return Ok(artWork);
         }
 
-        // POST api/<ArtWorkController>
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/<ArtWorkController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<ArtWorkController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

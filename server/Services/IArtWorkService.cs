@@ -1,8 +1,9 @@
 ﻿namespace CuratedArt.Services;
 
-using CuratedArt.Dtos;
+using Dtos;
 
 public interface IArtWorkService
 {
-    List<ArtWorkDto> GetArtWorks();
+    Task<List<ArtWorkDto>> GetArtWorks();
+    Task<ArtWorkDto> GetArtWork(Guid id);
 }
