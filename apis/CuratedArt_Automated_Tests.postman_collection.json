@@ -86,6 +86,134 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Delete Artwork Successfully Delete ArtWork",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(pm.info.requestName, function () {\r",
+									"    pm.response.to.not.be.error;\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{AppRoot}}/api/v1/artworks/739fff65-b56b-4ad2-a233-08da5d3bf262",
+							"host": [
+								"{{AppRoot}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"artworks",
+								"739fff65-b56b-4ad2-a233-08da5d3bf262"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Artwork Is Successful",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(pm.info.requestName, function () {\r",
+									"    var data = pm.response.json();\r",
+									"\r",
+									"    pm.response.to.not.be.error;\r",
+									"    pm.response.to.have.status(201);\r",
+									"    pm.expect(data.id).to.be.equal('bc91adda-666c-40f0-a22a-08da5d3bf666');\r",
+									"    pm.expect(data).to.be.not.empty;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"bc91adda-666c-40f0-a22a-08da5d3bf666\",\r\n    \"name\": \"artWork10\",\r\n    \"desc\": \"desc 10\",\r\n    \"dateReleased\": \"2022-12-31T23:59:59.9999999+00:00\",\r\n    \"type\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{AppRoot}}/api/v1/artworks",
+							"host": [
+								"{{AppRoot}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"artworks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Artwork Successfully Patch",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(pm.info.requestName, function () {\r",
+									"    var data = pm.response.json();\r",
+									"\r",
+									"    pm.response.to.not.be.error;\r",
+									"    pm.response.to.be.ok;\r",
+									"    pm.expect(data.name).to.be.eq('Mandy');\r",
+									"    pm.expect(data.dateReleased).to.be.eq('0001-01-01T00:00:00+00:00');\r",
+									"    pm.expect(data).to.be.not.empty;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n  {\r\n    \"op\": \"replace\",\r\n    \"path\": \"/name\",\r\n    \"value\": \"Mandy\"\r\n  },\r\n  {\r\n    \"op\": \"remove\",\r\n    \"path\": \"/dateReleased\",\r\n    \"value\": null\r\n  }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{AppRoot}}/api/v1/artworks/bc91adda-451c-40f0-a22a-08da5d3bf262",
+							"host": [
+								"{{AppRoot}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"artworks",
+								"bc91adda-451c-40f0-a22a-08da5d3bf262"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

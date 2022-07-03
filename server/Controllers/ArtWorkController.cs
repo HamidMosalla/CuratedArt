@@ -1,11 +1,11 @@
-﻿using CuratedArt.Services;
-using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+﻿using CuratedArt.Data;
 
 namespace CuratedArt.Controllers
 {
-    using CuratedArt.Dtos;
+    using Services;
+    using Microsoft.AspNetCore.Mvc;
+    using Dtos;
+    using Microsoft.AspNetCore.JsonPatch;
 
     [Route("api/v{version:apiVersion}/artworks")]
     [ApiController]
@@ -13,11 +13,13 @@ namespace CuratedArt.Controllers
     public class ArtWorkController : ControllerBase
     {
         private IArtWorkService _artWorkService;
+        private CuratedArtDbContext _curatedArtDbContext;
 
         // GET: api/<ArtWorkController>
-        public ArtWorkController(IArtWorkService artWorkService)
+        public ArtWorkController(IArtWorkService artWorkService, CuratedArtDbContext curatedArtDbContext)
         {
             _artWorkService = artWorkService;
+            _curatedArtDbContext = curatedArtDbContext;
         }
 
         [HttpGet]
@@ -28,7 +30,7 @@ namespace CuratedArt.Controllers
             return Ok(artWorks);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetArtWork")]
         public async Task<ActionResult<ArtWorkDto>> Get(Guid id)
         {
             var artWork = await _artWorkService.GetArtWork(id);
@@ -37,18 +39,34 @@ namespace CuratedArt.Controllers
         }
 
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult> Post([FromBody] ArtWorkDto artWorkDto)
         {
+            var createdArtWorkDto = await _artWorkService.CreateArtWork(artWorkDto);
+
+            return CreatedAtRoute("GetArtWork", new { id = artWorkDto.Id }, createdArtWorkDto);
         }
 
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPatch("{id}")]
+        public async Task<ActionResult> Patch(Guid id, [FromBody] JsonPatchDocument<ArtWorkDto> patchDocument)
         {
+            var artWork = await _artWorkService.GetArtWork(id);
+
+            if (artWork == null)
+            {
+                return NotFound();
+            }
+
+            await _artWorkService.PatchArtWork(patchDocument, artWork);
+
+            return Ok(artWork);
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult> Delete(Guid id)
         {
+            await _artWorkService.DeleteArtWork(id);
+
+            return NoContent();
         }
     }
 }

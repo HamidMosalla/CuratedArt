@@ -14,7 +14,8 @@ builder.Services.AddDbContext<CuratedArtDbContext>(options => options.UseSqlServ
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<CuratedArtDbContext>();
 
-builder.Services.AddControllersWithViews();
+//ATTENTION: AddNewtonsoftJson is only here to support JsonPatch
+builder.Services.AddControllersWithViews().AddNewtonsoftJson(); ;
 
 if (builder.Environment.IsDevelopment())
 {

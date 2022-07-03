@@ -1,4 +1,6 @@
-﻿using CuratedArt.Dtos;
+﻿using CuratedArt.Data.Models;
+using CuratedArt.Dtos;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
 
 namespace CuratedArt.Services;
@@ -22,14 +24,63 @@ public class ArtWorkService : IArtWorkService
         return artWorks;
     }
 
-    public async Task<ArtWorkDto>  GetArtWork(Guid id)
+    public async Task<ArtWorkDto?> GetArtWork(Guid id)
     {
-        var artWork =  await _curatedArtDbContext.ArtWorks.FindAsync(id);
+        var artWork = await _curatedArtDbContext.ArtWorks.FindAsync(id);
+
+        if (artWork == null) return null;
 
         return new ArtWorkDto
         {
-            Id = artWork.Id, Name = artWork.Name, Desc = artWork.Desc, DateReleased = artWork.DateReleased,
+            Id = artWork.Id,
+            Name = artWork.Name,
+            Desc = artWork.Desc,
+            DateReleased = artWork.DateReleased,
             Type = artWork.Type
         };
+    }
+
+    public async Task DeleteArtWork(Guid id)
+    {
+        var artWork = await _curatedArtDbContext.ArtWorks.FirstOrDefaultAsync(a => a.Id == id);
+
+        if (artWork != null)
+        {
+            _curatedArtDbContext.ArtWorks.Remove(artWork);
+            await _curatedArtDbContext.SaveChangesAsync();
+        }
+    }
+
+    public async Task<ArtWorkDto> CreateArtWork(ArtWorkDto artWorkDto)
+    {
+        var artWork = new ArtWork
+        {
+            Id = artWorkDto.Id == Guid.Empty ? Guid.NewGuid() : artWorkDto.Id,
+            Type = artWorkDto.Type,
+            Name = artWorkDto.Name,
+            DateReleased = artWorkDto.DateReleased,
+            Desc = artWorkDto.Desc,
+        };
+
+        await _curatedArtDbContext.ArtWorks.AddAsync(artWork);
+        await _curatedArtDbContext.SaveChangesAsync();
+
+        return artWorkDto;
+    }
+
+    public async Task PatchArtWork(JsonPatchDocument<ArtWorkDto> patchDocument, ArtWorkDto artWorkDto)
+    {
+        patchDocument.ApplyTo(artWorkDto);
+
+        // Meh, didn't want to install mapper
+        var artWork = await _curatedArtDbContext.ArtWorks.FindAsync(artWorkDto.Id);
+
+        artWork.Id = artWorkDto.Id;
+        artWork.Name = artWorkDto.Name;
+        artWork.Desc = artWorkDto.Desc;
+        artWork.DateReleased = artWorkDto.DateReleased;
+        artWork.Type = artWorkDto.Type;
+
+        await _curatedArtDbContext.SaveChangesAsync();
     }
 }
