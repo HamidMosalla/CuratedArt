@@ -1,9 +1,8 @@
 using CuratedArt.Data;
+using CuratedArt.Data.Seeds;
 using CuratedArt.FrontEndArchitecture;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using CuratedArt.Controllers;
-using CuratedArt.Data.Models;
 using CuratedArt.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +29,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<IArtWorkService, ArtWorkService>();
+builder.Services.AddTransient<SeedArtWorks>();
 
 var app = builder.Build();
 
@@ -52,6 +52,9 @@ using (var scope = app.Services.CreateScope())
     // TODO: need to add check here to only run migrations if it was applicable
     var db = scope.ServiceProvider.GetRequiredService<CuratedArtDbContext>();
     await db.Database.MigrateAsync();
+
+    var seeder = new SeedArtWorks(db);
+    await seeder.Seed();
 }
 
 if (app.Environment.IsDevelopment())
