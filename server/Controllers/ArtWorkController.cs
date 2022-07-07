@@ -76,5 +76,13 @@ namespace CuratedArt.Controllers
 
             return NoContent();
         }
+
+        [HttpDelete("bulk-delete")]
+        public async Task<ActionResult> BulkDelete([FromBody] Guid[] ids)
+        {
+            await _artWorkService.DeleteArtWorks(ids);
+
+            return NoContent();
+        }
     }
 }

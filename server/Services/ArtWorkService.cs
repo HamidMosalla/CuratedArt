@@ -51,6 +51,15 @@ public class ArtWorkService : IArtWorkService
         }
     }
 
+    public async Task DeleteArtWorks(Guid[] ids)
+    {
+        var artWorks = _curatedArtDbContext.ArtWorks.Where(a => ids.Contains(a.Id));
+
+        _curatedArtDbContext.ArtWorks.RemoveRange(artWorks);
+
+        await _curatedArtDbContext.SaveChangesAsync();
+    }
+
     public async Task<ArtWorkDto> CreateArtWork(ArtWorkDto artWorkDto)
     {
         var artWork = new ArtWork
