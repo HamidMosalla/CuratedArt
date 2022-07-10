@@ -14,6 +14,7 @@
     <Content Remove="wwwroot\dist\**" />
     <EmbeddedResource Remove="wwwroot\dist\**" />
     <None Remove="wwwroot\dist\**" />
+    <InternalsVisibleTo Include="CuratedArt.IntegrationTests" />
   </ItemGroup>
 
   <ItemGroup>

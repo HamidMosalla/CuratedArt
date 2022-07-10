@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32519.379
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CuratedArt", "CuratedArt.csproj", "{F3A0F099-54AF-44DF-B636-2804FFBCE4DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CuratedArt", "CuratedArt.csproj", "{F3A0F099-54AF-44DF-B636-2804FFBCE4DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CuratedArt.IntegrationTests", "..\CuratedArt.IntegrationTests\CuratedArt.IntegrationTests.csproj", "{97F0D147-6FBE-49DB-A449-8C1ED582791F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{F3A0F099-54AF-44DF-B636-2804FFBCE4DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3A0F099-54AF-44DF-B636-2804FFBCE4DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3A0F099-54AF-44DF-B636-2804FFBCE4DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97F0D147-6FBE-49DB-A449-8C1ED582791F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97F0D147-6FBE-49DB-A449-8C1ED582791F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97F0D147-6FBE-49DB-A449-8C1ED582791F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97F0D147-6FBE-49DB-A449-8C1ED582791F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

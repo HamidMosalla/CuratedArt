@@ -104,3 +104,5 @@ app.MapRazorPages();
 //app.MapArtWorkEndpoints();
 
 app.Run();
+
+public partial class Program { }
