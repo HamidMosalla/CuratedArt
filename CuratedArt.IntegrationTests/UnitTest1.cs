@@ -1,7 +1,6 @@
 using System.Net;
 using CuratedArt.Data;
-using CuratedArt.IntegrationTests.Setup;
-using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CuratedArt.IntegrationTests
 {
@@ -9,18 +8,26 @@ namespace CuratedArt.IntegrationTests
     {
         private readonly IntegrationTestFactory<Program, CuratedArtDbContext> _factory;
 
-        public Tests(IntegrationTestFactory<Program, CuratedArtDbContext> factory) => _factory = factory;
+        public Tests(IntegrationTestFactory<Program, CuratedArtDbContext> factory)
+        {
+            _factory = factory;
+        }
 
         [Fact]
         public async Task TestHomePage()
         {
-            var client = _factory.CreateClient();
+            using (var scope = _factory.Services.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<CuratedArtDbContext>();
 
-            // Arrange
-            var defaultPage = await client.GetAsync("/");
+                var client = _factory.CreateClient();
 
-            // Assert
-            Assert.Equal(HttpStatusCode.OK, defaultPage.StatusCode);
+                // Arrange
+                var defaultPage = await client.GetAsync("/");
+
+                // Assert
+                Assert.Equal(HttpStatusCode.OK, defaultPage.StatusCode);
+            }
         }
     }
 }

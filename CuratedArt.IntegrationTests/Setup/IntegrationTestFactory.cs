@@ -1,4 +1,5 @@
-﻿using CuratedArt.IntegrationTests.Setup;
+﻿using CuratedArt.Data;
+using CuratedArt.IntegrationTests.Setup;
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Configurations;
 using DotNet.Testcontainers.Containers;
@@ -15,14 +16,12 @@ public class IntegrationTestFactory<TProgram, TDbContext> : WebApplicationFactor
 
     public IntegrationTestFactory()
     {
-        _container = new TestcontainersBuilder<PostgreSqlTestcontainer>()
-            .WithDatabase(new PostgreSqlTestcontainerConfiguration
+        _container = new TestcontainersBuilder<MsSqlTestcontainer>()
+            .WithDatabase(new MsSqlTestcontainerConfiguration
             {
-                Database = "test_db",
-                Username = "postgres",
-                Password = "postgres",
+                Password = "localdevpassword#123",
             })
-            .WithImage("postgres:11")
+            .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
             .WithCleanUp(true)
             .Build();
     }
@@ -32,8 +31,7 @@ public class IntegrationTestFactory<TProgram, TDbContext> : WebApplicationFactor
         builder.ConfigureTestServices(services =>
         {
             services.RemoveDbContext<TDbContext>();
-            services.AddDbContext<TDbContext>(options => { options.UseNpgsql(_container.ConnectionString); });
-            services.EnsureDbCreated<TDbContext>();
+            services.AddDbContext<TDbContext>(options => { options.UseSqlServer(_container.ConnectionString); });
         });
     }
 
