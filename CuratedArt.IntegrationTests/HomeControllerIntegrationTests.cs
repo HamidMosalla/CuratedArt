@@ -4,15 +4,13 @@ using CuratedArt.IntegrationTests.Setup;
 
 namespace CuratedArt.IntegrationTests
 {
-    public class Tests : IntegrationTestBase
+    public class HomeControllerIntegrationTests : IntegrationTestBase
     {
-        public Tests(IntegrationTestFactory<Program, CuratedArtDbContext> factory) : base(factory) { }
+        public HomeControllerIntegrationTests(IntegrationTestFactory<Program, CuratedArtDbContext> factory) : base(factory) { }
 
         [Fact]
-        public async Task TestHomePage()
+        public async Task CalledToHomePage_Always_ReceiveOKStatusCode()
         {
-            var context = CuratedArtDbContext;
-
             var client = Factory.CreateClient();
 
             // Arrange

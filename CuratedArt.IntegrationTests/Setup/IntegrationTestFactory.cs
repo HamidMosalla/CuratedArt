@@ -1,5 +1,4 @@
-﻿using CuratedArt.Data;
-using CuratedArt.IntegrationTests.Setup;
+﻿using CuratedArt.IntegrationTests.Setup;
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Configurations;
 using DotNet.Testcontainers.Containers;
