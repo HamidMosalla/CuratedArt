@@ -1,33 +1,25 @@
 using System.Net;
 using CuratedArt.Data;
-using Microsoft.Extensions.DependencyInjection;
+using CuratedArt.IntegrationTests.Setup;
 
 namespace CuratedArt.IntegrationTests
 {
-    public class Tests : IClassFixture<IntegrationTestFactory<Program, CuratedArtDbContext>>
+    public class Tests : IntegrationTestBase
     {
-        private readonly IntegrationTestFactory<Program, CuratedArtDbContext> _factory;
-
-        public Tests(IntegrationTestFactory<Program, CuratedArtDbContext> factory)
-        {
-            _factory = factory;
-        }
+        public Tests(IntegrationTestFactory<Program, CuratedArtDbContext> factory) : base(factory) { }
 
         [Fact]
         public async Task TestHomePage()
         {
-            using (var scope = _factory.Services.CreateScope())
-            {
-                var context = scope.ServiceProvider.GetRequiredService<CuratedArtDbContext>();
+            var context = CuratedArtDbContext;
 
-                var client = _factory.CreateClient();
+            var client = Factory.CreateClient();
 
-                // Arrange
-                var defaultPage = await client.GetAsync("/");
+            // Arrange
+            var defaultPage = await client.GetAsync("/");
 
-                // Assert
-                Assert.Equal(HttpStatusCode.OK, defaultPage.StatusCode);
-            }
+            // Assert
+            Assert.Equal(HttpStatusCode.OK, defaultPage.StatusCode);
         }
     }
 }
