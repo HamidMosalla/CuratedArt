@@ -81,7 +81,7 @@ namespace CuratedArt.IntegrationTests
         }
 
         [Fact]
-        public async Task PostArtWorks_WhenCalled_ReturnsTheCorrectArtWork()
+        public async Task PostArtWork_WhenCalled_ReturnsTheCorrectArtWork()
         {
             var artWorkDto = CreateArtWorkDto();
 
@@ -94,6 +94,68 @@ namespace CuratedArt.IntegrationTests
             Assert.Equal(HttpStatusCode.OK, artWorksReponse.StatusCode);
             Assert.NotNull(artWorksReponse);
             Assert.IsType<ArtWorkDto>(artWorksReponse);
+        }
+
+        [Fact]
+        public async Task PatchArtWork_WhenCalled_CorrectlyPatchesTheArtWork()
+        {
+            var artWorkId = await AddArtWorkAsync();
+
+            var client = Factory.CreateClient();
+
+            var body = @"[
+                        " + "\n" +
+                        @"  {
+                        " + "\n" +
+                        @"    ""op"": ""replace"",
+                        " + "\n" +
+                        @"    ""path"": ""/name"",
+                        " + "\n" +
+                        @"    ""value"": ""Mandy""
+                        " + "\n" +
+                        @"  },
+                        " + "\n" +
+                        @"  {
+                        " + "\n" +
+                        @"    ""op"": ""remove"",
+                        " + "\n" +
+                        @"    ""path"": ""/dateReleased"",
+                        " + "\n" +
+                        @"    ""value"": null
+                        " + "\n" +
+                        @"  }
+                        " + "\n" +
+                        @"]";
+
+            var httpContent = new StringContent(body);
+
+            // Arrange
+            var artWorksReponse = await client.PatchAsync($"/api/v1/artworks/{artWorkId}", httpContent);
+
+            var artWork = CuratedArtDbContext.ArtWorks.Find(artWorkId);
+
+            // Assert
+            Assert.Equal(HttpStatusCode.OK, artWorksReponse.StatusCode);
+            Assert.True(artWork.DateReleased == default(DateTimeOffset));
+            Assert.True(artWork.Name == "Mandy");
+        }
+
+        [Fact]
+        public async Task DeleteArtWork_WhenCalled_ReturnsTheCorrectArtWork()
+        {
+            var artWorkDto = CreateArtWorkDto();
+
+            var client = Factory.CreateClient();
+
+            // Arrange
+            var artWorksReponse = await client.DeleteAsync($"/api/v1/artworks/{artWorkDto.Id}");
+
+            // Assert
+            Assert.Equal(HttpStatusCode.NoContent, artWorksReponse.StatusCode);
+
+            var nonExistingArtWork = CuratedArtDbContext.ArtWorks.SingleOrDefault(a => a.Id == artWorkDto.Id);
+
+            Assert.Null(nonExistingArtWork);
         }
     }
 }
