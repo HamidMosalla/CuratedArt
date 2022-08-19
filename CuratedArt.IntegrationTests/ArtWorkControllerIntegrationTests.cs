@@ -4,12 +4,20 @@ using CuratedArt.Data;
 using CuratedArt.Data.Models;
 using CuratedArt.Dtos;
 using CuratedArt.IntegrationTests.Setup;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CuratedArt.IntegrationTests
 {
     public class ArtWorkControllerIntegrationTests : IntegrationTestBase
     {
-        public ArtWorkControllerIntegrationTests(IntegrationTestFactory<Program, CuratedArtDbContext> factory) : base(factory) { }
+        private readonly CuratedArtDbContext _curatedArtDbContext;
+
+        public ArtWorkControllerIntegrationTests(IntegrationTestFactory<Program, CuratedArtDbContext> factory) :
+            base(factory)
+        {
+            var scope = Factory.Services.CreateScope();
+            _curatedArtDbContext = scope.ServiceProvider.GetRequiredService<CuratedArtDbContext>();
+        }
 
         public async Task AddArtWorksAsync()
         {
@@ -28,16 +36,16 @@ namespace CuratedArt.IntegrationTests
                 new ArtWork{ Id = Guid.NewGuid(), DateReleased = DateTime.Now , Name = "Artwork1", Desc = "desc for art work 1", Type = ArtWorkType.Movie},
             };
 
-            await CuratedArtDbContext.AddRangeAsync(artWorks);
-            await CuratedArtDbContext.SaveChangesAsync();
+            await _curatedArtDbContext.AddRangeAsync(artWorks);
+            await _curatedArtDbContext.SaveChangesAsync();
         }
 
         public async Task<Guid> AddArtWorkAsync()
         {
             var artWork = new ArtWork { Id = Guid.NewGuid(), DateReleased = DateTime.Now, Name = "Artwork1", Desc = "desc for art work 1", Type = ArtWorkType.Movie };
 
-            await CuratedArtDbContext.AddAsync(artWork);
-            await CuratedArtDbContext.SaveChangesAsync();
+            await _curatedArtDbContext.AddAsync(artWork);
+            await _curatedArtDbContext.SaveChangesAsync();
 
             return artWork.Id;
         }
@@ -60,7 +68,7 @@ namespace CuratedArt.IntegrationTests
 
             // Assert
             Assert.NotNull(artWorksReponse);
-            Assert.True(artWorksReponse.Count == 11);
+            Assert.True(artWorksReponse.Count == 10);
             Assert.IsType<List<ArtWorkDto>>(artWorksReponse);
         }
 
@@ -132,7 +140,7 @@ namespace CuratedArt.IntegrationTests
             // Arrange
             var artWorksReponse = await client.PatchAsync($"/api/v1/artworks/{artWorkId}", httpContent);
 
-            var artWork = CuratedArtDbContext.ArtWorks.Find(artWorkId);
+            var artWork = _curatedArtDbContext.ArtWorks.Find(artWorkId);
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, artWorksReponse.StatusCode);
@@ -153,7 +161,7 @@ namespace CuratedArt.IntegrationTests
             // Assert
             Assert.Equal(HttpStatusCode.NoContent, artWorksReponse.StatusCode);
 
-            var nonExistingArtWork = CuratedArtDbContext.ArtWorks.SingleOrDefault(a => a.Id == artWorkDto.Id);
+            var nonExistingArtWork = _curatedArtDbContext.ArtWorks.SingleOrDefault(a => a.Id == artWorkDto.Id);
 
             Assert.Null(nonExistingArtWork);
         }
