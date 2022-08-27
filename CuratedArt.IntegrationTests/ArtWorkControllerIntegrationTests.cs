@@ -1,5 +1,7 @@
 using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Text;
 using CuratedArt.Data;
 using CuratedArt.Data.Models;
 using CuratedArt.Dtos;
@@ -33,7 +35,6 @@ namespace CuratedArt.IntegrationTests
                 new ArtWork{ Id = Guid.NewGuid(), DateReleased = DateTime.Now , Name = "Artwork1", Desc = "desc for art work 1", Type = ArtWorkType.Music},
                 new ArtWork{ Id = Guid.NewGuid(), DateReleased = DateTime.Now , Name = "Artwork1", Desc = "desc for art work 1", Type = ArtWorkType.Painting},
                 new ArtWork{ Id = Guid.NewGuid(), DateReleased = DateTime.Now , Name = "Artwork1", Desc = "desc for art work 1", Type = ArtWorkType.Music},
-                new ArtWork{ Id = Guid.NewGuid(), DateReleased = DateTime.Now , Name = "Artwork1", Desc = "desc for art work 1", Type = ArtWorkType.Movie},
             };
 
             await _curatedArtDbContext.AddRangeAsync(artWorks);
@@ -52,7 +53,7 @@ namespace CuratedArt.IntegrationTests
 
         public ArtWorkDto CreateArtWorkDto()
         {
-            return new ArtWorkDto { Id = Guid.NewGuid(), DateReleased = DateTime.Now, Name = "Artwork1", Desc = "desc for art work 1", Type = ArtWorkType.Movie };
+            return new ArtWorkDto { Id = Guid.NewGuid(), DateReleased = DateTime.Now, Name = "Artwork1Joe", Desc = "desc for art work 1", Type = ArtWorkType.Movie };
         }
 
 
@@ -68,7 +69,7 @@ namespace CuratedArt.IntegrationTests
 
             // Assert
             Assert.NotNull(artWorksReponse);
-            Assert.True(artWorksReponse.Count == 10);
+            Assert.True(artWorksReponse.Count == 20);
             Assert.IsType<List<ArtWorkDto>>(artWorksReponse);
         }
 
@@ -99,9 +100,15 @@ namespace CuratedArt.IntegrationTests
             var artWorksReponse = await client.PostAsJsonAsync<ArtWorkDto>($"/api/v1/artworks", artWorkDto);
 
             // Assert
-            Assert.Equal(HttpStatusCode.OK, artWorksReponse.StatusCode);
+            Assert.Equal(HttpStatusCode.Created, artWorksReponse.StatusCode);
             Assert.NotNull(artWorksReponse);
-            Assert.IsType<ArtWorkDto>(artWorksReponse);
+            var artWorkReponseArtWorkDto = await artWorksReponse.Content.ReadFromJsonAsync<ArtWorkDto>();
+            Assert.IsType<ArtWorkDto>(artWorkReponseArtWorkDto);
+            Assert.True(artWorkReponseArtWorkDto.Name == artWorkDto.Name);
+            // ATTENTION: it did save it in the service
+            var inTheDb = _curatedArtDbContext.ArtWorks.SingleOrDefault(a => a.Id == artWorkDto.Id);
+            Assert.NotNull(inTheDb);
+            Assert.True(inTheDb.Name == "Artwork1Joe");
         }
 
         [Fact]
@@ -135,12 +142,13 @@ namespace CuratedArt.IntegrationTests
                         " + "\n" +
                         @"]";
 
-            var httpContent = new StringContent(body);
+            var httpContent = new StringContent(body, Encoding.UTF8);
+            httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
             // Arrange
             var artWorksReponse = await client.PatchAsync($"/api/v1/artworks/{artWorkId}", httpContent);
 
-            var artWork = _curatedArtDbContext.ArtWorks.Find(artWorkId);
+            var artWork = await _curatedArtDbContext.ArtWorks.FindAsync(artWorkId);
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, artWorksReponse.StatusCode);
