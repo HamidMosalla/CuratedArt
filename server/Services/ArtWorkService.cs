@@ -99,7 +99,7 @@ public class ArtWorkService : IArtWorkService
         patchDocument.ApplyTo(artWorkDto);
 
         // Meh, didn't want to install mapper
-        var artWork = await _curatedArtDbContext.ArtWorks.FindAsync(artWorkDto.Id);
+        var artWork = await _curatedArtDbContext.ArtWorks.SingleOrDefaultAsync(a => a.Id == artWorkDto.Id);
 
         artWork.Id = artWorkDto.Id;
         artWork.Name = artWorkDto.Name;

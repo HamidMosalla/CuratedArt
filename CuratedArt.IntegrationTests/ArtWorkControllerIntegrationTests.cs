@@ -6,18 +6,20 @@ using CuratedArt.Data;
 using CuratedArt.Data.Models;
 using CuratedArt.Dtos;
 using CuratedArt.IntegrationTests.Setup;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CuratedArt.IntegrationTests
 {
-    public class ArtWorkControllerIntegrationTests : IntegrationTestBase
+    public class ArtWorkControllerIntegrationTests : IClassFixture<IntegrationTestFactory<Program, CuratedArtDbContext>>
     {
         private readonly CuratedArtDbContext _curatedArtDbContext;
+        private readonly IntegrationTestFactory<Program, CuratedArtDbContext> _integrationTestFactory;
 
-        public ArtWorkControllerIntegrationTests(IntegrationTestFactory<Program, CuratedArtDbContext> factory) :
-            base(factory)
+        public ArtWorkControllerIntegrationTests(IntegrationTestFactory<Program, CuratedArtDbContext> factory)
         {
-            var scope = Factory.Services.CreateScope();
+            _integrationTestFactory = factory;
+            var scope = _integrationTestFactory.Services.CreateScope();
             _curatedArtDbContext = scope.ServiceProvider.GetRequiredService<CuratedArtDbContext>();
         }
 
@@ -62,7 +64,7 @@ namespace CuratedArt.IntegrationTests
         {
             await AddArtWorksAsync();
 
-            var client = Factory.CreateClient();
+            var client = _integrationTestFactory.CreateClient();
 
             // Arrange
             var artWorksReponse = await client.GetFromJsonAsync<IList<ArtWorkDto>>("/api/v1/artworks");
@@ -78,7 +80,7 @@ namespace CuratedArt.IntegrationTests
         {
             var artWorkId = await AddArtWorkAsync();
 
-            var client = Factory.CreateClient();
+            var client = _integrationTestFactory.CreateClient();
 
             // Arrange
             var artWorksReponse = await client.GetFromJsonAsync<ArtWorkDto>($"/api/v1/artworks/{artWorkId}");
@@ -94,7 +96,7 @@ namespace CuratedArt.IntegrationTests
         {
             var artWorkDto = CreateArtWorkDto();
 
-            var client = Factory.CreateClient();
+            var client = _integrationTestFactory.CreateClient();
 
             // Arrange
             var artWorksReponse = await client.PostAsJsonAsync<ArtWorkDto>($"/api/v1/artworks", artWorkDto);
@@ -116,7 +118,7 @@ namespace CuratedArt.IntegrationTests
         {
             var artWorkId = await AddArtWorkAsync();
 
-            var client = Factory.CreateClient();
+            var client = _integrationTestFactory.CreateClient();
 
             var body = @"[
                         " + "\n" +
@@ -148,7 +150,9 @@ namespace CuratedArt.IntegrationTests
             // Arrange
             var artWorksReponse = await client.PatchAsync($"/api/v1/artworks/{artWorkId}", httpContent);
 
-            var artWork = await _curatedArtDbContext.ArtWorks.FindAsync(artWorkId);
+            _curatedArtDbContext.ChangeTracker.Clear();
+
+            var artWork = await _curatedArtDbContext.ArtWorks.SingleOrDefaultAsync(a=> a.Id  == artWorkId);
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, artWorksReponse.StatusCode);
@@ -161,7 +165,7 @@ namespace CuratedArt.IntegrationTests
         {
             var artWorkDto = CreateArtWorkDto();
 
-            var client = Factory.CreateClient();
+            var client = _integrationTestFactory.CreateClient();
 
             // Arrange
             var artWorksReponse = await client.DeleteAsync($"/api/v1/artworks/{artWorkDto.Id}");
