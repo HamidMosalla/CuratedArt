@@ -1,6 +1,4 @@
-﻿using CuratedArt.Data;
-
-namespace CuratedArt.Controllers
+﻿namespace CuratedArt.Controllers
 {
     using Services;
     using Microsoft.AspNetCore.Mvc;
@@ -13,13 +11,11 @@ namespace CuratedArt.Controllers
     public class ArtWorkController : ControllerBase
     {
         private IArtWorkService _artWorkService;
-        private CuratedArtDbContext _curatedArtDbContext;
 
         // GET: api/<ArtWorkController>
-        public ArtWorkController(IArtWorkService artWorkService, CuratedArtDbContext curatedArtDbContext)
+        public ArtWorkController(IArtWorkService artWorkService)
         {
             _artWorkService = artWorkService;
-            _curatedArtDbContext = curatedArtDbContext;
         }
 
         [HttpGet]

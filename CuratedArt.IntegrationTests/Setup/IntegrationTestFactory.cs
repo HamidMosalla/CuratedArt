@@ -1,4 +1,5 @@
-﻿using CuratedArt.IntegrationTests.Setup;
+﻿using CuratedArt.IntegrationTests.Creators;
+using CuratedArt.IntegrationTests.Setup;
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Configurations;
 using DotNet.Testcontainers.Containers;
@@ -31,6 +32,7 @@ public class IntegrationTestFactory<TProgram, TDbContext> : WebApplicationFactor
         {
             services.RemoveDbContext<TDbContext>();
             services.AddDbContext<TDbContext>(options => { options.UseSqlServer(_container.ConnectionString); });
+            services.AddTransient<ArtworkCreator>();
         });
     }
 
