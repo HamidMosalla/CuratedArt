@@ -18,7 +18,7 @@ namespace CuratedArt.UnitTests
         [Fact]
         public async Task Get_WhenCalled_ReturnsTheCorrectType()
         {
-            _artWorkServiceFake.GetArtWorks().Returns(new List<ArtWorkDto>());
+            _artWorkServiceFake.GetArtWorks().Returns(new List<ArtWorkDto> { });
 
             var result = await _sut.Get();
 
