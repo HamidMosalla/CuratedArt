@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-CuratedArt-8EAE91B0-F8BD-4DDB-8BF8-660643698F0D</UserSecretsId>
@@ -10,9 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ConfigurationExtensions\**" />
     <Compile Remove="wwwroot\dist\**" />
+    <Content Remove="ConfigurationExtensions\**" />
     <Content Remove="wwwroot\dist\**" />
+    <EmbeddedResource Remove="ConfigurationExtensions\**" />
     <EmbeddedResource Remove="wwwroot\dist\**" />
+    <None Remove="ConfigurationExtensions\**" />
     <None Remove="wwwroot\dist\**" />
     <InternalsVisibleTo Include="CuratedArt.IntegrationTests" />
   </ItemGroup>
@@ -33,10 +37,6 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.8" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ConfigurationExtensions\" />
   </ItemGroup>
 
 </Project>
