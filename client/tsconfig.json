@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
-      "module": "esnext",
+      "target": "es6",
+      "module": "commonjs",
+      "moduleResolution": "node",
       "esModuleInterop": true,
       "allowSyntheticDefaultImports": true,
       "skipLibCheck": true,
@@ -8,15 +10,14 @@
       "strict": true,
       "experimentalDecorators": true,
       "noUnusedLocals": true,
-      "lib": ["es2019", "dom"],
+      "lib": ["es2020", "dom"],
+      "resolveJsonModule": true,
       "declaration": true,
       "importHelpers": true,
       "noImplicitThis": false,
       "useDefineForClassFields": true,
       "downlevelIteration": true,
-      "target": "es5",
       "noImplicitAny": true,
-      "moduleResolution": "node",
       "sourceMap": true,
       "outDir": "dist",
       "baseUrl": ".",
@@ -29,5 +30,6 @@
   },
   "include": [
       "src/**/*"
-  ]
+  ],
+  "exclude": ["node_modules"]
 }
