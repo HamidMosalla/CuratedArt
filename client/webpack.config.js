@@ -4,7 +4,12 @@ const miniCssExtractPlugin = require("mini-css-extract-plugin");
 const forkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const webPackAssetsManifest = require("webpack-assets-manifest");
 const node_notifier = require("node-notifier");
-const stripAnsi = require("strip-ansi");
+
+let stripAnsi;
+import('strip-ansi').then(module => {
+  stripAnsi = module.default;
+});
+
 const webpack = require('webpack')
 
 function notify(type, message) {
@@ -98,7 +103,7 @@ WebpackNotifierPlugin.prototype.apply = function (compiler) {
 
 module.exports = (_, argv) => {
     var options = {
-        entry: "./src/index.tsx",
+        entry: "./src/mainEntry.tsx",
 
         output: {
             filename: "[contenthash].js",
