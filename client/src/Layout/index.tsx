@@ -2,10 +2,15 @@ import { FC } from "react";
 import { styled, Box } from "@mui/material";
 import { Header } from "../Layout/Header";
 import { Footer } from "../Layout/Footer";
+import { ReactNode } from "react";
+
+interface LayoutProps {
+    children: ReactNode;
+}
 
 import { FOOTER_HEIGHT } from "../utils/constants";
 
-export const Layout: FC = ({ children }) => {
+export const Layout: FC<LayoutProps> = ({ children }) => {
     return (
         <LayoutWrapper>
             <ContentWrapper>
