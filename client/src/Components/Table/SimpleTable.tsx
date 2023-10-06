@@ -14,12 +14,12 @@ import {
   } from "@tanstack/react-table";
   import { FC } from "react";
   
-  interface TableProps {
+  interface SimpleTableProps {
     data: any[];
     columns: ColumnDef<any>[];
   }
   
-  export const Table: FC<TableProps> = ({ data, columns }) => {
+  const SimpleTable: FC<SimpleTableProps> = ({ data, columns }) => {
     const { getHeaderGroups, getRowModel } = useReactTable({
       data,
       columns,
@@ -60,3 +60,5 @@ import {
       </Paper>
     );
   };
+
+  export default SimpleTable;
