@@ -110,6 +110,12 @@ import {
           <MuiTable>
             {!isFetching && (
               <TableHead>
+                {/* {
+                    console.log("header.column", header.column)
+                    console.log("header.column.id:", header.column.id)
+                    console.log("header.column.getIsSorted:", header.column.getIsSorted())
+                    console.log("header.column.getAutoSortDir:", header.column.getAutoSortDir())
+                } */}
                 {getHeaderGroups().map((headerGroup) => (
                   <TableRow key={headerGroup.id}>
                     {headerGroup.headers.map((header) => (
