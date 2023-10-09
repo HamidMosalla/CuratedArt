@@ -11,6 +11,11 @@ export const StyledTableRow = styled(TableRow)`
   :hover {
     background-color: #d9d9d9;
   }
+
+  /* Apply background color if the 'selected' prop is true */
+  ${props => props.selected && `
+    background-color: pink !important;
+  `}
 `;
 
 export const StyledPagination = styled(Pagination)`
