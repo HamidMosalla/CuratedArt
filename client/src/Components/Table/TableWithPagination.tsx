@@ -33,6 +33,7 @@ import {
     skeletonCount?: number;
     skeletonHeight?: number;
     headerComponent?: JSX.Element;
+    footerComponent?: JSX.Element;
     pageCount?: number;
     page?: (page: number) => void;
     search?: (search: string) => void;
@@ -47,6 +48,7 @@ import {
     skeletonCount = 10,
     skeletonHeight = 28,
     headerComponent,
+    footerComponent,
     pageCount,
     search,
     onClickRow,
@@ -57,11 +59,17 @@ import {
   
     const memoizedData = useMemo(() => data, [data]);
     const memoizedColumns = useMemo(() => columns, [columns]);
+    
     const memoisedHeaderComponent = useMemo(
       () => headerComponent,
       [headerComponent]
     );
   
+    const memoisedFooterComponent = useMemo(
+        () => footerComponent,
+        [footerComponent]
+      );
+
     const { getHeaderGroups, getRowModel, getAllColumns } = useReactTable({
       data: memoizedData,
       columns: memoizedColumns,
@@ -111,6 +119,8 @@ import {
             {!isFetching && (
               <TableHead>
                 {/* {
+                    If we need to implement server side sorting we need to use custom sorting fuctions, for more info, check the docs:
+                    https://tanstack.com/table/v8/docs/api/features/sorting#sorting-functions
                     console.log("header.column", header.column)
                     console.log("header.column.id:", header.column.id)
                     console.log("header.column.getIsSorted:", header.column.getIsSorted())
@@ -173,6 +183,7 @@ import {
             No Data Found
           </Box>
         )}
+        {memoisedFooterComponent && <Box>{memoisedFooterComponent}</Box>}
         {pageCount && page && (
           <StyledPagination
             count={pageCount}
