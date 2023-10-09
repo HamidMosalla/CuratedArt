@@ -21,9 +21,19 @@ export const StyledTableRow = styled(TableRow)`
 
   /* Apply styles for the 'disabled' prop */
   ${props => props.disabled && `
-    background-color: #b2b2b2 !important; /* gray color for disabled rows */
-    user-select: none !important; /* prevent text selection */
-    pointer-events: none !important; /* prevent all interactions */
+    background-color: #b2b2b2 !important; 
+    user-select: none !important; 
+    pointer-events: none !important;
+  
+    /* Target the MUI Checkbox when it's checked inside a disabled row */
+    .MuiCheckbox-root.Mui-checked svg {
+      visibility: hidden !important; 
+    }
+    
+    /* If you want to further style the checked but "invisible" checkbox (e.g., grayed out) */
+    .MuiCheckbox-root.Mui-checked {
+      color: #b2b2b2 !important;
+    }
   `}
 `;
 
