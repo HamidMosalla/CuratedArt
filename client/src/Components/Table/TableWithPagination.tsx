@@ -135,7 +135,7 @@ const Table: FC<TableProps> = ({
                     <TableBody>
                         {!isFetching ? (
                             getRowModel().rows.map((row) => (
-                                <StyledTableRow key={row.id} selected={row.getIsSelected()}>
+                                <StyledTableRow key={row.id} selected={row.getIsSelected()} disabled={row.original.status == "inactive"}>
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell onClick={() => onClickRow?.(cell, row)} key={cell.id}>
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
