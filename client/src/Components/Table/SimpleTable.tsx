@@ -1,5 +1,13 @@
 import { Paper, Table as MuiTable, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import { ColumnDef, flexRender, getCoreRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
+import {
+    ColumnDef,
+    flexRender,
+    getCoreRowModel,
+    // getSortedRowModel,
+    useReactTable,
+    SortingState,
+    OnChangeFn
+} from "@tanstack/react-table";
 import { FC } from "react";
 import ImportExportIcon from "@mui/icons-material/ImportExport";
 import { pink } from "@mui/material/colors";
@@ -7,14 +15,22 @@ import { pink } from "@mui/material/colors";
 interface SimpleTableProps {
     data: any[];
     columns: ColumnDef<any>[];
+    isLoading: boolean;
+    sorting: SortingState;
+    setSorting: OnChangeFn<SortingState>;
 }
 
-const SimpleTable: FC<SimpleTableProps> = ({ data, columns }) => {
+const SimpleTable: FC<SimpleTableProps> = ({ data, columns, isLoading, sorting, setSorting }) => {
     const { getHeaderGroups, getRowModel } = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
-        getSortedRowModel: getSortedRowModel(),
+        // getSortedRowModel: getSortedRowModel(),
+        manualSorting: true,
+        state: {
+            sorting,
+        },
+        onSortingChange: setSorting,
     });
 
     return (
