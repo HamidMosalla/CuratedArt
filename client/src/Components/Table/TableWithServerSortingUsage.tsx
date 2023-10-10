@@ -1,11 +1,11 @@
 import { Box } from "@mui/material";
-import SimpleTable from "./SimpleTable";
+import SimpleTable from "./TableWithServerSorting";
 import Columns from "./Columns";
 import useFetchUsers from "./api/useFetchUsers";
 import { useState, useMemo } from "react";
 import { SortingState } from "@tanstack/react-table";
 
-const SimpleTableUsage = () => {
+const TableWithServerSortingUsage = () => {
     const [sorting, setSorting] = useState<SortingState>([]);
 
     const sortingInfo = useMemo(() => {
@@ -41,4 +41,4 @@ const SimpleTableUsage = () => {
     );
 };
 
-export default SimpleTableUsage;
+export default TableWithServerSortingUsage;

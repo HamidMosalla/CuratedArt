@@ -11,7 +11,7 @@ import { FC } from "react";
 import ImportExportIcon from "@mui/icons-material/ImportExport";
 import { pink } from "@mui/material/colors";
 
-interface SimpleTableProps {
+interface TableWithServerSortingProps {
     data: any[];
     columns: ColumnDef<any>[];
     isLoading: boolean;
@@ -19,7 +19,7 @@ interface SimpleTableProps {
     setSorting: OnChangeFn<SortingState>;
 }
 
-const SimpleTable: FC<SimpleTableProps> = ({ data, columns, isLoading, sorting, setSorting }) => {
+const TableWithServerSorting: FC<TableWithServerSortingProps> = ({ data, columns, isLoading, sorting, setSorting }) => {
     const { getHeaderGroups, getRowModel } = useReactTable({
         data,
         columns,
@@ -69,4 +69,4 @@ const SimpleTable: FC<SimpleTableProps> = ({ data, columns, isLoading, sorting, 
     );
 };
 
-export default SimpleTable;
+export default TableWithServerSorting;
