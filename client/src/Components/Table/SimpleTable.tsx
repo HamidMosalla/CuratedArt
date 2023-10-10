@@ -3,7 +3,6 @@ import {
     ColumnDef,
     flexRender,
     getCoreRowModel,
-    // getSortedRowModel,
     useReactTable,
     SortingState,
     OnChangeFn
@@ -25,7 +24,6 @@ const SimpleTable: FC<SimpleTableProps> = ({ data, columns, isLoading, sorting, 
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
-        // getSortedRowModel: getSortedRowModel(),
         manualSorting: true,
         state: {
             sorting,
