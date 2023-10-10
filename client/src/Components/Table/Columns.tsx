@@ -1,6 +1,8 @@
 import { Chip, Checkbox } from "@mui/material";
 import { ColumnDef } from "@tanstack/react-table";
 import CustomizedMenus from "../MUI/CustomizedMenus";
+import EditableCell from "../MUI/EditableCell";
+
 
 const Columns: ColumnDef<any, any>[] = [
     {
@@ -33,6 +35,10 @@ const Columns: ColumnDef<any, any>[] = [
     {
         accessorKey: "name",
         header: "Name",
+        size: 225,
+        cell: EditableCell,
+        enableColumnFilter: true,
+        filterFn: "includesString",
     },
     {
         accessorKey: "email",
