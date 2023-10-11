@@ -9,6 +9,9 @@ import {
     TableBody,
     TextField,
     Icon,
+    Select,
+    MenuItem,
+    Grid,
 } from "@mui/material";
 import {
     Cell,
@@ -35,7 +38,11 @@ interface TableProps {
     footerComponent?: JSX.Element;
     pageCount?: number;
     page?: (page: number) => void;
-    search?: (search: string) => void;
+    setSearchTerm?: (searchTerm: string) => void;
+    setSearchColumn?: {
+        value: string;
+        set: (searchColumnName: string) => void;
+    };
     onClickRow?: (cell: Cell<any, unknown>, row: Row<any>) => void;
     searchLabel?: string;
 }
@@ -49,7 +56,8 @@ const Table: FC<TableProps> = ({
     headerComponent,
     footerComponent,
     pageCount,
-    search,
+    setSearchTerm: setSearchTerm,
+    setSearchColumn: setSearchColumn,
     onClickRow,
     page,
     searchLabel = "Search",
@@ -79,7 +87,7 @@ const Table: FC<TableProps> = ({
     const noDataFound = !isFetching && (!memoizedData || memoizedData.length === 0);
 
     const handleSearchChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        search && search(e.target.value);
+        setSearchTerm && setSearchTerm(e.target.value);
     };
 
     const handlePageChange = (event: ChangeEvent<unknown>, currentPage: number) => {
@@ -91,28 +99,39 @@ const Table: FC<TableProps> = ({
         <Paper elevation={2} style={{ padding: "1rem 0px" }}>
             <Box paddingX="1rem">
                 {memoisedHeaderComponent && <Box>{memoisedHeaderComponent}</Box>}
-                {search && (
-                    <TextField
-                        onChange={debounce(handleSearchChange, 1000)}
-                        size="small"
-                        label={searchLabel}
-                        margin="normal"
-                        variant="standard"
-                    />
+                {setSearchTerm && setSearchColumn && (
+                    <Grid container spacing={2} alignItems="flex-end">
+                        {/* Grid item for Select */}
+                        <Grid item xs={12} sm={6}>
+                            <Select
+                                fullWidth
+                                value={setSearchColumn.value}
+                                onChange={(e) => setSearchColumn.set(e.target.value as string)}
+                            >
+                                <MenuItem value="name">Name</MenuItem>
+                                <MenuItem value="email">Email</MenuItem>
+                                <MenuItem value="gender">Gender</MenuItem>
+                            </Select>
+                        </Grid>
+
+                        {/* Grid item for TextField */}
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                fullWidth
+                                onChange={debounce(handleSearchChange, 1000)}
+                                size="small"
+                                label={searchLabel}
+                                margin="normal"
+                                variant="standard"
+                            />
+                        </Grid>
+                    </Grid>
                 )}
             </Box>
             <Box style={{ overflowX: "auto" }}>
                 <MuiTable>
                     {!isFetching && (
                         <TableHead>
-                            {/* {
-                    If we need to implement server side sorting we need to use custom sorting fuctions, for more info, check the docs:
-                    https://tanstack.com/table/v8/docs/api/features/sorting#sorting-functions
-                    console.log("header.column", header.column)
-                    console.log("header.column.id:", header.column.id)
-                    console.log("header.column.getIsSorted:", header.column.getIsSorted())
-                    console.log("header.column.getAutoSortDir:", header.column.getAutoSortDir())
-                } */}
                             {getHeaderGroups().map((headerGroup) => (
                                 <TableRow key={headerGroup.id}>
                                     {headerGroup.headers.map((header) => (
@@ -135,7 +154,11 @@ const Table: FC<TableProps> = ({
                     <TableBody>
                         {!isFetching ? (
                             getRowModel().rows.map((row) => (
-                                <StyledTableRow key={row.id} selected={row.getIsSelected()} disabled={row.original.status == "inactive"}>
+                                <StyledTableRow
+                                    key={row.id}
+                                    selected={row.getIsSelected()}
+                                    disabled={row.original.status == "inactive"}
+                                >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell onClick={() => onClickRow?.(cell, row)} key={cell.id}>
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -147,7 +170,6 @@ const Table: FC<TableProps> = ({
                             <>
                                 {skeletons.map((skeleton) => (
                                     <TableRow key={skeleton}>
-                                        
                                         {Array.from({ length: columnCount }, (x, i) => i).map((elm) => (
                                             <TableCell key={elm}>
                                                 <Skeleton height={skeletonHeight} />

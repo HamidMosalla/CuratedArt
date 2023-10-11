@@ -3,7 +3,6 @@ import { ColumnDef } from "@tanstack/react-table";
 import CustomizedMenus from "../MUI/CustomizedMenus";
 import EditableCell from "../MUI/EditableCell";
 
-
 const Columns: ColumnDef<any, any>[] = [
     {
         id: "select",
