@@ -8,7 +8,6 @@ import {
     TableCell,
     TableBody,
     TextField,
-    Icon,
     Select,
     MenuItem,
     Grid,
