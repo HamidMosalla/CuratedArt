@@ -7,12 +7,13 @@ import { useState } from "react";
 
 const TableWithPaginationUsage = () => {
     const [currentPage, setCurrentPage] = useState<number | undefined>(1);
-    const [search, setSearch] = useState<string | undefined>("");
+    const [searchTerm, setSearchTerm] = useState<string | undefined>("");
+    const [searchColumn, setSearchColumn] = useState<string>("name");
 
     const fetchUsers = async () => {
         const params = {
-            ...(!search && { page: currentPage }),
-            ...(search && { name: search }),
+            ...(!searchTerm && { page: currentPage }),
+            ...(searchTerm && { [searchColumn]: searchTerm }),
         };
 
         try {
@@ -31,7 +32,7 @@ const TableWithPaginationUsage = () => {
     };
 
     const { data, isFetching, isError, error, isSuccess } = useQuery<Api.Users.FetchUsersResponse, Error>(
-        ["users", currentPage, search],
+        ["users", currentPage, searchTerm],
         fetchUsers,
         {
             refetchOnWindowFocus: false,
@@ -86,8 +87,9 @@ const TableWithPaginationUsage = () => {
                     onClickRow={onClickRow}
                     pageCount={data.maxPageSize}
                     page={setCurrentPage}
-                    search={setSearch}
-                    searchLabel="Search by name"
+                    setSearchTerm={setSearchTerm}
+                    setSearchColumn={{ value: searchColumn, set: setSearchColumn }}
+                    searchLabel="Search by selected column"
                 />
             )}
         </Box>
