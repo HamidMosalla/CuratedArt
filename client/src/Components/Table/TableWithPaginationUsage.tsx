@@ -3,12 +3,14 @@ import axios from "axios";
 import TableWithPagination from "./TableWithPagination";
 import Columns from "./Columns";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 const TableWithPaginationUsage = () => {
     const [currentPage, setCurrentPage] = useState<number | undefined>(1);
     const [searchTerm, setSearchTerm] = useState<string | undefined>("");
     const [searchColumn, setSearchColumn] = useState<string>("name");
+    const memoizedSetSearchColumn = useMemo(() => ({ value: searchColumn, set: setSearchColumn }), [searchColumn, setSearchColumn]);
+
 
     const fetchUsers = async () => {
         const params = {
@@ -88,7 +90,7 @@ const TableWithPaginationUsage = () => {
                     pageCount={data.maxPageSize}
                     page={setCurrentPage}
                     setSearchTerm={setSearchTerm}
-                    setSearchColumn={{ value: searchColumn, set: setSearchColumn }}
+                    setSearchColumn={memoizedSetSearchColumn}
                     searchLabel="Search by selected column"
                 />
             )}
