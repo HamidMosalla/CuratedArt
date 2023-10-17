@@ -1,9 +1,10 @@
 import { Alert, Box, Button, Typography } from "@mui/material";
-import axios from "axios";
 import TableWithPagination from "./TableWithPagination";
 import Columns from "./Columns";
 import { useQuery } from "@tanstack/react-query";
 import { useState, useMemo } from "react";
+import { SortingState } from "@tanstack/react-table";
+import fetchUsers from "./api/fetchUsers";
 
 const TableWithPaginationUsage = () => {
     const [currentPage, setCurrentPage] = useState<number | undefined>(1);
@@ -11,31 +12,23 @@ const TableWithPaginationUsage = () => {
     const [searchColumn, setSearchColumn] = useState<string>("name");
     const memoizedSetSearchColumn = useMemo(() => ({ value: searchColumn, set: setSearchColumn }), [searchColumn, setSearchColumn]);
 
+    const [sorting, setSorting] = useState<SortingState>([]);
+    
+    const sortingInfo = useMemo(() => {
+        const sortedInfo = sorting.map((s) => ({
+          columnName: s.id,
+          sortingDirection: s.desc ? "DESC" : "ASC"
+        }));
+    
+        // Convert the sorting info to a string representation
+        return JSON.stringify(sortedInfo);
+    }, [sorting]);
 
-    const fetchUsers = async () => {
-        const params = {
-            ...(!searchTerm && { page: currentPage }),
-            ...(searchTerm && { [searchColumn]: searchTerm }),
-        };
-
-        try {
-            const { data, headers } = await axios.get<Api.Users.Data[]>("https://gorest.co.in/public/v2/users", {
-                params,
-            });
-            const maxPageSize = Number(headers["x-pagination-pages"]) === 0 ? 1 : Number(headers["x-pagination-pages"]);
-
-            return {
-                data,
-                maxPageSize,
-            };
-        } catch (error) {
-            throw new Error("Failed to fetch users.");
-        }
-    };
+    const fetchUsersWithParameters = () => fetchUsers(sortingInfo, searchTerm, searchColumn, currentPage);
 
     const { data, isFetching, isError, error, isSuccess } = useQuery<Api.Users.FetchUsersResponse, Error>(
-        ["users", currentPage, searchTerm],
-        fetchUsers,
+        ["users", sortingInfo, searchTerm, searchColumn, currentPage],
+        fetchUsersWithParameters,
         {
             refetchOnWindowFocus: false,
             keepPreviousData: true,
@@ -92,6 +85,8 @@ const TableWithPaginationUsage = () => {
                     setSearchTerm={setSearchTerm}
                     setSearchColumn={memoizedSetSearchColumn}
                     searchLabel="Search by selected column"
+                    sorting={sorting}
+                    setSorting={setSorting}
                 />
             )}
         </Box>

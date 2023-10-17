@@ -17,8 +17,10 @@ import {
     ColumnDef,
     flexRender,
     getCoreRowModel,
-    getSortedRowModel,
+    // getSortedRowModel,
+    OnChangeFn,
     Row,
+    SortingState,
     useReactTable,
 } from "@tanstack/react-table";
 import { debounce } from "lodash";
@@ -44,6 +46,8 @@ interface TableProps {
     };
     onClickRow?: (cell: Cell<any, unknown>, row: Row<any>) => void;
     searchLabel?: string;
+    sorting: SortingState;
+    setSorting: OnChangeFn<SortingState>;
 }
 
 const Table: FC<TableProps> = ({
@@ -60,6 +64,8 @@ const Table: FC<TableProps> = ({
     onClickRow,
     page,
     searchLabel = "Search",
+    sorting,
+    setSorting,
 }) => {
     const [paginationPage, setPaginationPage] = useState(1);
 
@@ -74,9 +80,14 @@ const Table: FC<TableProps> = ({
         data: memoizedData,
         columns: memoizedColumns,
         getCoreRowModel: getCoreRowModel(),
-        getSortedRowModel: getSortedRowModel(),
+        // getSortedRowModel: getSortedRowModel(),
         manualPagination: true,
         pageCount,
+        manualSorting: true,
+        state: {
+            sorting,
+        },
+        onSortingChange: setSorting,
     });
 
     const skeletons = Array.from({ length: skeletonCount }, (x, i) => i);

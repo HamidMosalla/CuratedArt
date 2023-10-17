@@ -1,10 +1,8 @@
 import { Link } from "react-router-dom";
-// import TableWithServerSortingUsage from "./Table/TableWithServerSortingUsage"
 import TableWithPaginationUsage from "./Table/TableWithPaginationUsage"
 
 const HomePage = () => (
     <div className="jumbotron">
-        {/* < TableWithServerSortingUsage /> */}
         < TableWithPaginationUsage />
         <br />
         <h1>Curated Art</h1>
