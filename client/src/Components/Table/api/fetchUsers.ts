@@ -1,10 +1,5 @@
 import axios from "axios";
 
-export interface SortingInfo {
-    columnName: string;
-    sortingDirection: string;
-}
-
 async function fetchUsers(
     sortingInfo = "",
     searchTerm: string | undefined,
