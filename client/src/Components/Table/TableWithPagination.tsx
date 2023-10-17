@@ -17,7 +17,6 @@ import {
     ColumnDef,
     flexRender,
     getCoreRowModel,
-    // getSortedRowModel,
     OnChangeFn,
     Row,
     SortingState,
@@ -80,7 +79,6 @@ const Table: FC<TableProps> = ({
         data: memoizedData,
         columns: memoizedColumns,
         getCoreRowModel: getCoreRowModel(),
-        // getSortedRowModel: getSortedRowModel(),
         manualPagination: true,
         pageCount,
         manualSorting: true,
@@ -89,6 +87,12 @@ const Table: FC<TableProps> = ({
         },
         onSortingChange: setSorting,
     });
+
+    const sortableColumnIds = useMemo(() => {
+        return getAllColumns()
+            .filter((column) => column.getCanSort())
+            .map((column) => ({ columnId: column.id, columnName: column.columnDef.header }));
+    }, [getAllColumns]);
 
     const skeletons = Array.from({ length: skeletonCount }, (x, i) => i);
 
@@ -111,20 +115,20 @@ const Table: FC<TableProps> = ({
                 {memoisedHeaderComponent && <Box>{memoisedHeaderComponent}</Box>}
                 {setSearchTerm && setSearchColumn && (
                     <Grid container spacing={2} alignItems="flex-end">
-                        {/* Grid item for Select */}
                         <Grid item xs={12} sm={6}>
                             <Select
                                 fullWidth
                                 value={setSearchColumn.value}
                                 onChange={(e) => setSearchColumn.set(e.target.value as string)}
                             >
-                                <MenuItem value="name">Name</MenuItem>
-                                <MenuItem value="email">Email</MenuItem>
-                                <MenuItem value="gender">Gender</MenuItem>
+                                {sortableColumnIds.map((menuItem) => (
+                                    <MenuItem key={menuItem.columnId} value={menuItem.columnId}>
+                                        {menuItem.columnName?.toString()}
+                                    </MenuItem>
+                                ))}
                             </Select>
                         </Grid>
 
-                        {/* Grid item for TextField */}
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 fullWidth
